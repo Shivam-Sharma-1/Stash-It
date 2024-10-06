@@ -1,4 +1,4 @@
-import { getGroups } from "@/server/get-groups";
+import { getProjects } from "@/server/get-projects";
 import Link from "next/link";
 import React from "react";
 import NewProject from "./NewProject";
@@ -6,8 +6,7 @@ import Header from "../Header";
 import ProjectActions from "./ProjectActions";
 
 const Dashboard = async () => {
-  const groupsList = await getGroups();
-  console.log("GROUPS", groupsList);
+  const groupsList = await getProjects();
 
   const myProjects = groupsList ? (
     groupsList.map((group) => (
