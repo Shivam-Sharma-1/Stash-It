@@ -2,10 +2,10 @@ import { pinata } from "@/utils/config";
 import React from "react";
 
 const getAssets = async (groupId) => {
-  const files = await pinata.files.list().group(groupId).limit(0);
+  const files = await pinata.listFiles().group(groupId).all();
   console.log("Got-Assets", files);
 
-  return files.files;
+  return files;
 };
 
 export default getAssets;
