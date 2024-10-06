@@ -1,10 +1,15 @@
+"use server";
+
 import React from "react";
 import { UploadFile } from "./UploadFile";
 import ProjectAssets from "./ProjectAssets";
 import Header from "../Header";
 import ProjectActions from "../Dashboard/ProjectActions";
+import { checkUser } from "@/lib/checkUser";
 
-const ProjectPage = ({ groupId }) => {
+const ProjectPage = async ({ groupId }) => {
+  await checkUser();
+
   return (
     <main className="w-full flex flex-col">
       <Header />

@@ -1,11 +1,16 @@
+"use server";
+
 import { getProjects } from "@/server/get-projects";
 import Link from "next/link";
 import React from "react";
 import NewProject from "./NewProject";
 import Header from "../Header";
 import ProjectActions from "./ProjectActions";
+import { checkUser } from "@/lib/checkUser";
 
 const Dashboard = async () => {
+  await checkUser();
+
   const groupsList = await getProjects();
 
   const myProjects = groupsList ? (
