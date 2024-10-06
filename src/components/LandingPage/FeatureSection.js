@@ -24,7 +24,7 @@ export default function FeatureSection() {
         duration={10}
         delay={-10}
         startXOffset={70}
-        curvature={50}
+        curvature={1}
       />
     </div>
   );

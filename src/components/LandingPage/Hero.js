@@ -6,6 +6,8 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import AnimatedGridPattern from '@/components/ui/animated-grid-pattern';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 const images = [
   { url: '/images/hero/1.png', offset: 0 },
@@ -21,7 +23,7 @@ export default function Hero() {
   const words = ['STORE', 'ORGANIZE', 'SHARE'];
 
   return (
-    <div className='flex relative flex-col items-center justify-start gap-4 w-full min-h-screen h-[800px] py-20 overflow-y-hidden overflow-x-hidden'>
+    <div className='flex relative flex-col items-center justify-start gap-4 w-full min-h-screen h-[800px] py-16 overflow-y-hidden overflow-x-hidden'>
       <div className='flex flex-col w-full items-center justify-center z-20'>
         <FlipWords
           duration={200}
@@ -29,7 +31,13 @@ export default function Hero() {
           words={words}
         />
         <h2 className='text-5xl font-bold'>YOUR ASSETS</h2>
-        <p></p>
+        <p className='max-w-md mt-4 leading-tight text-center text-sm'>
+          Stashit is the ultimate platform for game developers to store,
+          organize, and share their assets.
+        </p>
+        <Button className='mt-4 w-40' asChild>
+          <Link href='/auth'>Get Started</Link>
+        </Button>
       </div>
       <div className='flex flex-row items-start justify-evenly absolute w-[120%] top-0 gap-8 md:px-8 px-4 pt-8 z-10 h-full'>
         {images.map((image, index) => (
