@@ -1,9 +1,10 @@
+"use server";
+
 import { checkUser } from "@/lib/checkUser";
 import { pinata } from "@/utils/config";
-import React from "react";
 
 export const updateAsset = async ({ cid, asset }) => {
-  checkUser();
+  await checkUser();
 
   const response = await pinata.updateMetadata({
     cid: cid,

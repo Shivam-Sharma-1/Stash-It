@@ -1,9 +1,12 @@
+"use server";
+
 import { checkUser } from "@/lib/checkUser";
+import { auth } from "@/utils/auth";
 import { pinata } from "@/utils/config";
 import React from "react";
 
 export const createProject = async ({ project, isPublic }) => {
-  checkUser();
+  await checkUser();
 
   const group = await pinata.groups.create({
     name: project,

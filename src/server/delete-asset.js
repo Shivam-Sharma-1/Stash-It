@@ -1,9 +1,10 @@
+"use server";
+
 import { checkUser } from "@/lib/checkUser";
 import { pinata } from "@/utils/config";
-import React from "react";
 
 export const deleteAsset = async ({ cid }) => {
-  checkUser();
+  await checkUser();
 
   const response = await pinata.unpin([cid]);
   console.log("deleteAsset", response);

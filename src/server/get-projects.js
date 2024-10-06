@@ -1,9 +1,10 @@
+"use server";
+
 import { checkUser } from "@/lib/checkUser";
 import { pinata } from "@/utils/config";
-import React from "react";
 
 export const getProjects = async () => {
-  checkUser();
+  await checkUser();
 
   const groupsList = await pinata.groups.list().all();
 
