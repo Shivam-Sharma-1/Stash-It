@@ -2,6 +2,7 @@ import React from "react";
 import { UploadFile } from "./UploadFile";
 import ProjectAssets from "./ProjectAssets";
 import Header from "../Header";
+import ProjectActions from "../Dashboard/ProjectActions";
 
 const ProjectPage = ({ groupId }) => {
   return (
@@ -10,6 +11,7 @@ const ProjectPage = ({ groupId }) => {
       <div className="w-full flex flex-col gap-4 px-10 py-6">
         <div className="w-full flex justify-between items-center flex-wrap">
           <h1>My Assets</h1>
+          <ProjectActions groupId={groupId} />
           <UploadFile groupId={groupId} />
         </div>
         <div>
