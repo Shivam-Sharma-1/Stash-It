@@ -45,3 +45,27 @@ export async function POST(req) {
     });
   }
 }
+
+export async function GET(req) {
+  const session = await auth();
+
+  if (!session) {
+    return new Response(JSON.stringify({ error: "Unauthorized" }), {
+      status: 401,
+    });
+  }
+
+  try {
+    const projects = await prisma.project.findMany({
+      where: {
+        userId: session.user.id,
+      },
+    });
+    return new Response(JSON.stringify(projects), { status: 201 });
+  } catch (error) {
+    console.error("Error fetching projects:", error);
+    return new Response(JSON.stringify({ error: "Failed to fetch projects" }), {
+      status: 500,
+    });
+  }
+}
