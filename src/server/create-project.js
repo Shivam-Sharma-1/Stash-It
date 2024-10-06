@@ -23,7 +23,7 @@ export const createProject = async ({ project, isPublic }) => {
     pinataUserId: group.user_id,
   };
 
-  const response = await fetch("/api/projects", {
+  const response = await fetch(`${BASE_URL}/api/projects`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -14,7 +14,7 @@ export const deleteProject = async ({ groupId }) => {
     throw new Error(`Failed to delete project: ${status.error}`);
   }
 
-  const response = await fetch(`/api/projects/${groupId}`, {
+  const response = await fetch(`${BASE_URL}/api/projects/${groupId}`, {
     method: "DELETE",
   });
 
