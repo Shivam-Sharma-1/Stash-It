@@ -10,6 +10,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { Button } from "../ui/button";
 import { PiTrash } from "react-icons/pi";
 import { deleteAsset } from "@/server/delete-asset";
+import UpdateAsset from "./UpdateAsset";
 
 const handleDelete = async (cid) => {
   const res = await deleteAsset({ cid });
@@ -27,7 +28,7 @@ const AssetActions = ({ cid }) => {
         <BsThreeDotsVertical />
       </PopoverTrigger>
       <PopoverContent>
-        {/* <UpdateProject groupId={groupId} /> */}
+        <UpdateAsset cid={cid} />
         <Button onClick={() => handleDelete(cid)}>
           Delete
           <PiTrash />
