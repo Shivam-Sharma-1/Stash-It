@@ -11,12 +11,10 @@ export const createProject = async ({ project, isPublic }) => {
 
   const projectData = {
     name: project,
-    cid: group.id,
-    size: 0,
-    number_of_files: 0,
-    mime_type: "application/json",
-    group_id: group.id,
-    keyvalues: {},
+    groupId: group.id,
+    createdAt: group.createdAt,
+    updatedAt: group.updatedAt,
+    pinataUserId: group.user_id,
   };
 
   const response = await fetch("/api/projects", {
