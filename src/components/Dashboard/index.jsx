@@ -1,17 +1,23 @@
-import { getGroups } from "@/server/get-groups";
+import { getProjects } from "@/server/get-projects";
 import Link from "next/link";
 import React from "react";
 import NewProject from "./NewProject";
 import Header from "../Header";
+import ProjectActions from "./ProjectActions";
 
 const Dashboard = async () => {
-  const groupsList = await getGroups();
+  const groupsList = await getProjects();
 
-  const myProjects = groupsList.map((group) => (
-    <Link href={`dashboard/${group.id}`} key={group.id} className="w-fit">
-      <div className="bg-gray-400 w-fit px-4 py-2 rounded-md">{group.name}</div>
-    </Link>
-  ));
+  const myProjects = groupsList ? (
+    groupsList.map((group) => (
+      <div key={group.id} className="bg-gray-400 w-fit px-4 py-2 rounded-md">
+        <Link href={`dashboard/${group.id}`}>{group.name}</Link>
+        <ProjectActions groupId={group.id} />
+      </div>
+    ))
+  ) : (
+    <p>No Projects</p>
+  );
 
   return (
     <main className="w-full flex flex-col">

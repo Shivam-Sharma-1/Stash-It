@@ -1,16 +1,30 @@
-"use client";
-
 import React from "react";
-import { Button } from "../ui/button";
-import { createProject } from "@/server/create-project";
-
-const handleCreateProject = () => {
-  console.log("Creating project");
-  createProject();
-};
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import NewProjectForm from "./NewProjectForm";
 
 const NewProject = () => {
-  return <Button onClick={handleCreateProject}>Create Project</Button>;
+  return (
+    <Dialog>
+      <DialogTrigger className="px-4 py-2 bg-gray-500 rounded-md">
+        Create Project
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Create a new project</DialogTitle>
+          <DialogDescription>
+            <NewProjectForm />
+          </DialogDescription>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
+  );
 };
 
 export default NewProject;
