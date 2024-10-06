@@ -1,7 +1,10 @@
+import { checkUser } from "@/lib/checkUser";
 import { pinata } from "@/utils/config";
 import React from "react";
 
 export const deleteProject = async ({ groupId }) => {
+  checkUser();
+
   const status = await pinata.groups.delete({
     groupId: groupId,
   });

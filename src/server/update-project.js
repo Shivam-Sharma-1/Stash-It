@@ -1,7 +1,10 @@
+import { checkUser } from "@/lib/checkUser";
 import { pinata } from "@/utils/config";
 import React from "react";
 
 export const updateProject = async ({ groupId, project }) => {
+  checkUser();
+
   const group = await pinata.groups.update({
     groupId: groupId,
     name: project,
