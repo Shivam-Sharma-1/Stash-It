@@ -7,7 +7,7 @@ const ProjectAssets = async ({ groupId }) => {
   return (
     <>
       {files.map((file) => (
-        <div key={file.id}>{file.name}</div>
+        <div key={file.id}>{file.metadata.name}</div>
       ))}
     </>
   );
