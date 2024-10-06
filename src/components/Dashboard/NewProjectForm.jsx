@@ -39,7 +39,7 @@ const NewProjectForm = () => {
   });
 
   const onSubmit = async ({ project, isPublic }) => {
-    const res = await createProject({ project, isPublic });
+    await createProject({ project, isPublic });
   };
 
   return (
