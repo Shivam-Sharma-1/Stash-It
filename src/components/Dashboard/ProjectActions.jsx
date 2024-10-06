@@ -9,10 +9,10 @@ import {
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Button } from "../ui/button";
 import { PiTrash } from "react-icons/pi";
-import { deleteGroup } from "@/server/delete-group";
+import { deleteProject } from "@/server/delete-project";
 
 const handleDelete = async (groupId) => {
-  const res = await deleteGroup({ groupId });
+  const res = await deleteProject({ groupId });
   if (res === "OK") {
     console.log("Group deleted");
   } else {
