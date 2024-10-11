@@ -1,5 +1,3 @@
-"use server";
-
 import { getProjects } from "@/server/get-projects";
 import Link from "next/link";
 import React from "react";
@@ -16,8 +14,8 @@ const Dashboard = async () => {
   const myProjects = groupsList ? (
     groupsList.map((group) => (
       <div key={group.id} className="bg-gray-400 w-fit px-4 py-2 rounded-md">
-        <Link href={`dashboard/${group.id}`}>{group.name}</Link>
-        <ProjectActions groupId={group.id} />
+        <Link href={`dashboard/${group.groupId}`}>{group.name}</Link>
+        <ProjectActions groupId={group.groupId} />
       </div>
     ))
   ) : (
