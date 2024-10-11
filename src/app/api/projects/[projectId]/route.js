@@ -1,5 +1,5 @@
+import { prisma } from "@/prisma/prisma";
 import { auth } from "@/utils/auth";
-import { prisma } from "../../../../../prisma/prisma";
 
 export async function DELETE(req, { params }) {
   const { projectId } = params;
