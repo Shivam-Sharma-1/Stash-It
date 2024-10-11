@@ -3,9 +3,8 @@
 import { checkUser } from "@/lib/checkUser";
 import { pinata } from "@/utils/config";
 
-const shareAsse = async (cid) => {
+const shareAsset = async (cid) => {
   await checkUser();
-  console.log(cid);
 
   try {
     const url = await pinata.gateways.convert(cid);
@@ -18,4 +17,4 @@ const shareAsse = async (cid) => {
   }
 };
 
-export default shareAsse;
+export default shareAsset;
