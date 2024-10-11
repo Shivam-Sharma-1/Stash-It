@@ -14,11 +14,6 @@ import UpdateProject from "./UpdateProject";
 
 const handleDelete = async (groupId) => {
   const res = await deleteProject({ groupId });
-  if (res === "OK") {
-    console.log("Group deleted");
-  } else {
-    console.log("Error deleting group");
-  }
 };
 
 const ProjectActions = ({ groupId }) => {
