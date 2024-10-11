@@ -6,12 +6,13 @@ import { pinata } from "@/utils/config";
 export const deleteAsset = async ({ cid }) => {
   await checkUser();
 
-  const response = await pinata.unpin([cid]);
-  console.log("deleteAsset", response);
+  try {
+    const status = await pinata.unpin([cid]);
 
-  if (response.error) {
-    throw new Error(`Failed to delete asset: ${response.error}`);
+    console.log("Deleted file:", status);
+    return status;
+  } catch (error) {
+    console.error("Error deleting file:", error);
+    throw new Error("Failed to delete file:", error);
   }
-
-  return response;
 };
