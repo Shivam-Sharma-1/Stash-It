@@ -6,12 +6,16 @@ import { pinata } from "@/utils/config";
 export const updateAsset = async ({ cid, asset }) => {
   await checkUser();
 
-  const response = await pinata.updateMetadata({
-    cid: cid,
-    name: asset,
-  });
+  try {
+    const updatedAsset = await pinata.updateMetadata({
+      cid: cid,
+      name: asset,
+    });
 
-  console.log("Asset updated", response);
-
-  return response;
+    console.log("Updated file:", updatedAsset);
+    return updatedAsset;
+  } catch (error) {
+    console.error("Error updating file:", error);
+    throw new Error("Failed to update file:", error);
+  }
 };
