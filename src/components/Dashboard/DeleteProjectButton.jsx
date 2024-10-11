@@ -12,20 +12,33 @@ import { Button } from '../ui/button';
 import { Loader2 } from 'lucide-react';
 import { deleteProject } from '@/server/delete-project';
 import { toast } from 'sonner';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const DeleteProjectButton = ({ projectData }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const queryClient = useQueryClient();
+  const { mutateAsync: handleDeleteMutation } = useMutation({
+    mutationFn: (groupId) => deleteProject({ groupId }),
+    onSuccess: ({ deletedProject }) => {
+      queryClient.invalidateQueries({
+        queryKey: ['projects'],
+        refetchType: 'all',
+      });
+      toast.success('Deleted Project: ' + deletedProject.name);
+    },
+    onSettled: () => {
+      setIsLoading(false);
+      setIsDialogOpen(false);
+    },
+    onError: (error) => {
+      toast.error('An error occured while deleting your project');
+    },
+  });
+
   const handleDelete = async (groupId) => {
     setIsLoading(true);
-    const res = await deleteProject({ groupId });
-    if (res.deletedProject) {
-      toast.success('Deleted Project: ' + projectData.name);
-    } else {
-      toast.error('An error occured while deleting your project');
-    }
-    setIsLoading(false);
-    setIsDialogOpen(false);
+    const res = await handleDeleteMutation(groupId);
   };
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} dialog={false}>
