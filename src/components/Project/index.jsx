@@ -1,5 +1,3 @@
-"use server";
-
 import React from "react";
 import { UploadFile } from "./UploadFile";
 import ProjectAssets from "./ProjectAssets";
