@@ -22,6 +22,7 @@ import { useState } from 'react';
 import { PencilSimple } from '@phosphor-icons/react';
 import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const formSchema = z.object({
   project: z
@@ -42,18 +43,30 @@ const UpdateProjectForm = ({ initialProjectData, setIsDialogOpen }) => {
       isPublic: initialProjectData.isPublic,
     },
   });
+  const queryClient = useQueryClient();
+  const { mutateAsync: handleUpdateSubmit } = useMutation({
+    mutationFn: ({ groupId, project, isPublic }) =>
+      updateProject({ groupId, project, isPublic }),
+    onSuccess: ({ updatedProject }) => {
+      queryClient.invalidateQueries({
+        queryKey: ['projects'],
+        refetchType: 'all',
+      });
+      toast.success('Updated Project: ' + updatedProject.name);
+    },
+    onSettled: () => {
+      setIsLoading(false);
+      setIsDialogOpen(false);
+    },
+    onError: (error) => {
+      toast.error('An error occured while creating your project');
+    },
+  });
 
   const onSubmit = async ({ project, isPublic }) => {
     setIsLoading(true);
     const { groupId } = initialProjectData;
-    const res = await updateProject({ groupId, project, isPublic });
-    if (res.updatedProject) {
-      toast.success('Updated Project: ' + project);
-    } else {
-      toast.error('An error occured while updating your project');
-    }
-    setIsLoading(false);
-    setIsDialogOpen(false);
+    await handleUpdateSubmit({ groupId, project, isPublic });
   };
 
   return (
