@@ -5,7 +5,9 @@ import { Button } from "../ui/button";
 import { signOut } from "next-auth/react";
 
 const Logout = () => {
-  return <Button onClick={() => signOut()}>Log Out</Button>;
+  return (
+    <Button onClick={() => signOut({ redirectTo: "/auth" })}>Log Out</Button>
+  );
 };
 
 export default Logout;
