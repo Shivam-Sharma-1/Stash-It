@@ -1,4 +1,4 @@
-import { prisma } from "../../../../prisma/prisma";
+import { prisma } from "@/prisma/prisma";
 import { auth } from "@/utils/auth";
 
 export async function POST(req) {
@@ -12,15 +12,6 @@ export async function POST(req) {
 
   const { name, groupId, createdAt, updatedAt, pinataUserId } =
     await req.json();
-
-  console.log("Received request:", req.method);
-  console.log("Request body:", {
-    name,
-    groupId,
-    createdAt,
-    updatedAt,
-    pinataUserId,
-  });
 
   try {
     const newProject = await prisma.project.create({
@@ -48,6 +39,7 @@ export async function POST(req) {
 
 export async function GET(req) {
   const session = await auth();
+  console.log("GET", session);
 
   if (!session) {
     return new Response(JSON.stringify({ error: "Unauthorized" }), {
