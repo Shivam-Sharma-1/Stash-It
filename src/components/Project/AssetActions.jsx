@@ -11,14 +11,10 @@ import { Button } from "../ui/button";
 import { PiTrash } from "react-icons/pi";
 import { deleteAsset } from "@/server/delete-asset";
 import UpdateAsset from "./UpdateAsset";
+import ShareAsset from "./ShareAsset";
 
 const handleDelete = async (cid) => {
   const res = await deleteAsset({ cid });
-  if (res) {
-    console.log("Group deleted");
-  } else {
-    console.log("Error deleting group");
-  }
 };
 
 const AssetActions = ({ cid }) => {
@@ -33,6 +29,7 @@ const AssetActions = ({ cid }) => {
           Delete
           <PiTrash />
         </Button>
+        <ShareAsset cid={cid} />
       </PopoverContent>
     </Popover>
   );
