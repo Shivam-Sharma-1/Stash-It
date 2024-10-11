@@ -1,7 +1,7 @@
 "use server";
 
 import { checkUser } from "@/lib/checkUser";
-import { prisma } from "@/prisma/prisma";
+import { prisma } from "../../prisma/prisma";
 import { auth } from "@/utils/auth";
 
 export const getProjects = async () => {

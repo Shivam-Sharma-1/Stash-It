@@ -3,7 +3,7 @@
 import { checkUser } from "@/lib/checkUser";
 import { pinata } from "@/utils/config";
 import { auth } from "@/utils/auth";
-import { prisma } from "@/prisma/prisma";
+import { prisma } from "../../prisma/prisma";
 
 export const createProject = async ({ project, isPublic }) => {
   const session = await auth();

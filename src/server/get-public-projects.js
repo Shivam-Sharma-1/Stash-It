@@ -1,7 +1,7 @@
 "use server";
 
 import { checkUser } from "@/lib/checkUser";
-import { prisma } from "@/prisma/prisma";
+import { prisma } from "../../prisma/prisma";
 
 export const getPublicProjects = async () => {
   await checkUser();

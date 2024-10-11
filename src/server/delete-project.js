@@ -2,7 +2,7 @@
 
 import { checkUser } from "@/lib/checkUser";
 import { pinata } from "@/utils/config";
-import { prisma } from "@/prisma/prisma";
+import { prisma } from "../../prisma/prisma";
 import { auth } from "@/utils/auth";
 
 export const deleteProject = async ({ groupId }) => {
