@@ -2,39 +2,45 @@
 
 import { checkUser } from "@/lib/checkUser";
 import { pinata } from "@/utils/config";
+import { prisma } from "@/prisma/prisma";
+import { auth } from "@/utils/auth";
 
 export const updateProject = async ({ groupId, project }) => {
-  await checkUser();
+  const session = await auth();
 
-  const group = await pinata.groups.update({
-    groupId: groupId,
-    name: project,
-  });
-
-  console.log("Group updated", group);
-
-  const projectData = {
-    name: project,
-    groupId: group.id,
-    createdAt: group.createdAt,
-    updatedAt: group.updatedAt,
-    pinataUserId: group.user_id,
-  };
-
-  const response = await fetch(`/api/projects/${groupId}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(projectData),
-  });
-
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(`Failed to create project: ${errorData.error}`);
+  if (!session) {
+    throw new Error("Unauthorized");
   }
 
-  const newProject = await response.json();
-  console.log("Project saved to database", newProject);
-  return newProject;
+  await checkUser();
+
+  try {
+    const group = await pinata.groups.update({
+      groupId: groupId,
+      name: project,
+    });
+
+    const projectData = {
+      name: project,
+      groupId: groupId,
+    };
+
+    const updatedProject = await prisma.project.update({
+      where: { groupId: groupId },
+      data: {
+        ...projectData,
+        user: {
+          connect: {
+            id: session.user.id,
+          },
+        },
+      },
+    });
+
+    console.log("Project updated in database", updatedProject);
+    return updatedProject;
+  } catch (error) {
+    console.error("Error updating project:", error);
+    throw new Error(`Failed to update project: ${error.message}`);
+  }
 };
