@@ -3,18 +3,17 @@ import NewProject from './NewProject';
 import Header from '../Navbar';
 import { checkUser } from '@/lib/checkUser';
 import ProjectsList from './ProjectsList';
-import ProjectListSkeleton from './ProjectListSkeleton';
-import { getQueryClient } from '@/lib/get-query-client';
 import getProjects from '@/server/get-projects';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+import { getQueryClient } from '@/lib/get-query-client';
 
 const Dashboard = async () => {
   await checkUser();
   const queryClient = getQueryClient();
-
+  const initialData = await getProjects({ cursorId: '' });
   await queryClient.prefetchInfiniteQuery({
     queryKey: ['projects'],
-    queryFn: ({ pageParam }) => getProjects({ pageParam }),
+    queryFn: ({ pageParam }) => getProjects({ cursorId: pageParam }),
     initialPageParam: '',
   });
   return (
@@ -27,9 +26,7 @@ const Dashboard = async () => {
         </div>
         <div>
           <HydrationBoundary state={dehydrate(queryClient)}>
-            <Suspense fallback={<ProjectListSkeleton />}>
-              <ProjectsList />
-            </Suspense>
+            <ProjectsList initialData={initialData} />
           </HydrationBoundary>
         </div>
       </div>

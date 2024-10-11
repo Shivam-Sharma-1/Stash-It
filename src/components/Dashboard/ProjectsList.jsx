@@ -1,20 +1,23 @@
 'use client';
 import getProjects from '@/server/get-projects';
-import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import React from 'react';
 import InfiniteScroll from '../InfiniteScroll';
 import ProjectCard from '../Project/ProjectCard';
 
-export default function ProjectsList() {
-  const { data, isFetching, fetchNextPage, hasNextPage } =
-    useSuspenseInfiniteQuery({
-      queryKey: ['projects'],
-      queryFn: ({ pageParam }) => getProjects({ pageParam }),
-      initialPageParam: '',
-      getNextPageParam: (lastPage) =>
-        lastPage.projects.length < 9 ? null : lastPage.cursor,
-      getPreviousPageParam: (firstPage) => firstPage.cursor,
-    });
+export default function ProjectsList({ initialData }) {
+  const { data, isFetching, fetchNextPage, hasNextPage } = useInfiniteQuery({
+    queryKey: ['projects'],
+    queryFn: ({ pageParam }) => getProjects({ cursorId: pageParam }),
+    initialPageParam: '',
+    getNextPageParam: (lastPage) =>
+      lastPage.hasNextPage ? lastPage.cursor : undefined,
+    getPreviousPageParam: (firstPage) => firstPage.cursor,
+    initialData: initialData
+      ? { pages: [initialData], pageParams: [''] }
+      : undefined,
+    staleTime: 60000, // 1 minute
+  });
 
   return (
     <div className='flex flex-col w-full gap-2'>

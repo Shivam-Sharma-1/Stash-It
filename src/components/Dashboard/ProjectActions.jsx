@@ -1,35 +1,37 @@
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { Button } from "../ui/button";
-import { PiTrash } from "react-icons/pi";
-import { deleteProject } from "@/server/delete-project";
-import UpdateProject from "./UpdateProject";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { BsThreeDotsVertical } from 'react-icons/bs';
+import { deleteProject } from '@/server/delete-project';
+import UpdateProject from './UpdateProject';
 
-const handleDelete = async (groupId) => {
-  const res = await deleteProject({ groupId });
-};
+import DeleteProjectButton from './DeleteProjectButton';
 
-const ProjectActions = ({ groupId }) => {
+const ProjectActions = ({ projectData }) => {
   return (
-    <Popover>
-      <PopoverTrigger>
+    <DropdownMenu dialog={false}>
+      <DropdownMenuTrigger>
         <BsThreeDotsVertical />
-      </PopoverTrigger>
-      <PopoverContent>
-        <UpdateProject groupId={groupId} />
-        <Button onClick={() => handleDelete(groupId)}>
-          Delete
-          <PiTrash />
-        </Button>
-      </PopoverContent>
-    </Popover>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuLabel>Project Actions</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild onClick={(e) => e.preventDefault()}>
+          <UpdateProject initialProjectData={projectData} />
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild className='cursor-pointer'>
+          <DeleteProjectButton projectData={projectData} />
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

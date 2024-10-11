@@ -4,6 +4,7 @@ import { checkUser } from '@/lib/checkUser';
 import { pinata } from '@/utils/config';
 import { auth } from '@/utils/auth';
 import { prisma } from '../../prisma/prisma';
+import { revalidatePath } from 'next/cache';
 
 export const createProject = async ({ project, isPublic }) => {
   const session = await auth();
@@ -37,6 +38,7 @@ export const createProject = async ({ project, isPublic }) => {
     });
 
     console.log('Project saved to database', newProject);
+    // await revalidatePath('/dashboard');
     return { newProject };
   } catch (error) {
     console.error('Error creating project:', error);

@@ -4,6 +4,7 @@ import AuthContext from '@/components/AuthContext';
 import { Sora } from 'next/font/google';
 import { Toaster } from '@/components/ui/sonner';
 import Providers from '@/components/Providers';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 // const geistSans = localFont({
 //   src: './fonts/GeistVF.woff',
 //   variable: '--font-geist-sans',
@@ -31,7 +32,10 @@ export default function RootLayout({ children }) {
     <html lang='en'>
       <body className={`${sora.variable} ${sora.className} antialiased`}>
         <AuthContext>
-          <Providers>{children}</Providers>
+          <Providers>
+            {children}
+            <ReactQueryDevtools initialIsOpen={false} />
+          </Providers>
         </AuthContext>
         <Toaster />
       </body>

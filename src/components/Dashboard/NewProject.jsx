@@ -15,7 +15,11 @@ import { FolderPlus } from '@phosphor-icons/react/dist/ssr';
 const NewProject = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   return (
-    <Dialog open={isDialogOpen} onOpenChange={(open) => setIsDialogOpen(open)}>
+    <Dialog
+      dialog={false}
+      open={isDialogOpen}
+      onOpenChange={(open) => setIsDialogOpen(open)}
+    >
       <DialogTrigger asChild>
         <Button className='flex flex-row gap-2 items-center'>
           Create Project
@@ -26,9 +30,7 @@ const NewProject = () => {
         <DialogHeader>
           <DialogTitle>Create a new project</DialogTitle>
         </DialogHeader>
-        <DialogDescription>
-          <NewProjectForm setIsDialogOpen={setIsDialogOpen} />
-        </DialogDescription>
+        <NewProjectForm setIsDialogOpen={setIsDialogOpen} />
       </DialogContent>
     </Dialog>
   );

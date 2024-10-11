@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from '../ui/card';
 import { Folder, FolderLock } from '@phosphor-icons/react/dist/ssr';
+import ProjectActions from '../Dashboard/ProjectActions';
 
 export default function ProjectCard({ projectData }) {
   return (
@@ -21,7 +22,10 @@ export default function ProjectCard({ projectData }) {
             />
           )}
         </div>
-        <div className='text-lg font-medium'>{projectData.name}</div>
+        <div className='flex flex-row justify-between items-center text-lg font-medium'>
+          <span>{projectData.name}</span>
+          <ProjectActions projectData={projectData} />
+        </div>
       </CardContent>
     </Card>
   );

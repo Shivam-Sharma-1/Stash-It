@@ -1,15 +1,15 @@
-"use server";
+'use server';
 
-import { checkUser } from "@/lib/checkUser";
-import { pinata } from "@/utils/config";
-import { prisma } from "../../prisma/prisma";
-import { auth } from "@/utils/auth";
+import { checkUser } from '@/lib/checkUser';
+import { pinata } from '@/utils/config';
+import { prisma } from '../../prisma/prisma';
+import { auth } from '@/utils/auth';
 
 export const deleteProject = async ({ groupId }) => {
   const session = await auth();
 
   if (!session) {
-    throw new Error("Unauthorized");
+    throw new Error('Unauthorized');
   }
 
   await checkUser();
@@ -31,10 +31,10 @@ export const deleteProject = async ({ groupId }) => {
       },
     });
 
-    console.log("Project deleted from database", deletedProject);
-    return deletedProject;
+    console.log('Project deleted from database', deletedProject);
+    return { deletedProject };
   } catch (error) {
-    console.error("Error deleting project:", error);
+    console.error('Error deleting project:', error);
     throw new Error(`Failed to delete project: ${error.message}`);
   }
 };

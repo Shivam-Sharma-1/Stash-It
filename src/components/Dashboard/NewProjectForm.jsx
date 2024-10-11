@@ -1,9 +1,7 @@
 'use client';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -22,6 +20,8 @@ import { FolderPlus } from '@phosphor-icons/react/dist/ssr';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { getQueryClient } from '@/lib/get-query-client';
 
 const formSchema = z.object({
   project: z
@@ -42,15 +42,27 @@ const NewProjectForm = ({ setIsDialogOpen }) => {
       isPublic: false,
     },
   });
+  const queryClient = useQueryClient();
+  const { mutateAsync: handleSubmit } = useMutation({
+    mutationFn: ({ project, isPublic }) => createProject({ project, isPublic }),
+    onSuccess: ({ newProject }) => {
+      console.log('Project created:', newProject);
+      console.log('Invalidating projects query');
+      queryClient.invalidateQueries({ queryKey: ['projects'] });
+      toast.success('Created Project: ' + newProject.name);
+    },
+    onSettled: () => {
+      console.log('Refetching projects query');
+      queryClient.refetchQueries({ queryKey: ['projects'] });
+    },
+    onError: (error) => {
+      toast.error('An error occured while creating your project');
+    },
+  });
 
   const onSubmit = async ({ project, isPublic }) => {
     setIsLoading(true);
-    const res = await createProject({ project, isPublic });
-    if (res.newProject) {
-      toast.success('Created Project: ' + project);
-    } else {
-      toast.error('An error occured while creating your project');
-    }
+    await handleSubmit({ project, isPublic });
     setIsLoading(false);
     form.reset();
     setIsDialogOpen(false);
