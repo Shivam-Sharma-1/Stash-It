@@ -3,7 +3,7 @@
 import { checkUser } from "@/lib/checkUser";
 import { pinata } from "@/utils/config";
 
-const getAssets = async (cid) => {
+const getAsset = async (cid) => {
   await checkUser();
 
   try {
@@ -17,4 +17,4 @@ const getAssets = async (cid) => {
   }
 };
 
-export default getAssets;
+export default getAsset;
