@@ -7,7 +7,7 @@ import React, { useRef } from 'react';
 export default function UploadFeature({ endRef, containerRef }) {
   const div1Ref = useRef(null);
   return (
-    <div className='flex flex-row w-full items-start justify-evenly gap-36 py-32'>
+    <div className='flex flex-col md:flex-row w-full items-start justify-evenly gap-10 md:gap-36 md:py-32'>
       <div className='flex flex-row items-center gap-28'>
         <Image
           ref={div1Ref}
@@ -33,12 +33,12 @@ export default function UploadFeature({ endRef, containerRef }) {
         />
       </div>
 
-      <div className='flex flex-col gap-4 items-end max-w-md text-right'>
+      <div className='flex flex-col gap-4 items-center md:items-end max-w-md text-center md:text-right'>
         <h2 className='text-5xl text-primary font-bold'>
           Store your <br />
           game assets
         </h2>
-        <p className='max-w-2xl text-right'>
+        <p className='max-w-2xl text-center md:text-right'>
           Easily upload and store your game assets in organized projects. With
           Stashit, you can manage your textures, 3D models, animations, and
           more, all in one place.

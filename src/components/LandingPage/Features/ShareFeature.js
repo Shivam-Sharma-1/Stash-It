@@ -9,12 +9,12 @@ export default function ShareFeature({ startRef, containerRef }) {
   const user2Ref = useRef(null);
   const user3Ref = useRef(null);
   return (
-    <div className='flex flex-row w-full items-start justify-evenly gap-36 py-32'>
-      <div className='flex flex-col gap-4 items-start max-w-md'>
-        <h2 className='text-5xl text-primary font-bold'>
+    <div className='flex flex-col-reverse md:flex-row w-full items-start justify-evenly gap-10 md:gap-36 py-32'>
+      <div className='flex flex-col gap-4 items-center md:items-start max-w-md'>
+        <h2 className='text-5xl text-primary md:text-left text-center font-bold'>
           Share with the Community
         </h2>
-        <p className='max-w-2xl text-left'>
+        <p className='max-w-2xl text-center md:text-left'>
           Make your assets public and share them with the wider game development
           community. Let others benefit from your work while gaining exposure as
           a creator.

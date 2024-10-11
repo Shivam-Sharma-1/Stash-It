@@ -35,13 +35,19 @@ export default function Hero() {
           Stashit is the ultimate platform for game developers to store,
           organize, and share their assets.
         </p>
-        <Button className='mt-4 w-40' asChild>
+        <Button className='mt-4 md:w-40' asChild>
           <Link href='/auth'>Get Started</Link>
         </Button>
       </div>
-      <div className='flex flex-row items-start justify-evenly absolute w-[120%] top-0 gap-8 md:px-8 px-4 pt-8 z-10 h-full'>
+      <div className='flex flex-row items-start justify-evenly absolute w-[120%] top-0 gap-4 md:gap-8 md:px-8 px-4 pt-8 z-10 h-full'>
         {images.map((image, index) => (
-          <div key={index} className={cn('basis-1/6 h-full relative')}>
+          <div
+            key={index}
+            className={cn(
+              'md:basis-1/6 h-full relative',
+              index < 2 || index > 4 ? 'hidden md:block' : 'basis-2/6'
+            )}
+          >
             <motion.div
               initial={{ y: 300, opacity: 0 }}
               whileHover={{
