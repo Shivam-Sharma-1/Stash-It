@@ -2,6 +2,7 @@ import localFont from 'next/font/local';
 import './globals.css';
 import AuthContext from '@/components/AuthContext';
 import { Sora } from 'next/font/google';
+import { Toaster } from '@/components/ui/sonner';
 // const geistSans = localFont({
 //   src: './fonts/GeistVF.woff',
 //   variable: '--font-geist-sans',
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
     <html lang='en'>
       <body className={`${sora.variable} ${sora.className} antialiased`}>
         <AuthContext>{children}</AuthContext>
+        <Toaster />
       </body>
     </html>
   );
