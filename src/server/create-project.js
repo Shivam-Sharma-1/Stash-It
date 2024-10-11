@@ -1,42 +1,44 @@
 "use server";
 
 import { checkUser } from "@/lib/checkUser";
-import { auth } from "@/utils/auth";
 import { pinata } from "@/utils/config";
-import React from "react";
+import { auth } from "@/utils/auth";
+import { prisma } from "@/prisma/prisma";
 
 export const createProject = async ({ project, isPublic }) => {
-  await checkUser();
+  const session = await auth();
 
-  const group = await pinata.groups.create({
-    name: project,
-    // isPublic: isPublic,
-  });
-
-  console.log("Group created", group);
-
-  const projectData = {
-    name: project,
-    groupId: group.id,
-    createdAt: group.createdAt,
-    updatedAt: group.updatedAt,
-    pinataUserId: group.user_id,
-  };
-
-  const response = await fetch(`${BASE_URL}/api/projects`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(projectData),
-  });
-
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(`Failed to create project: ${errorData.error}`);
+  if (!session) {
+    throw new Error("Unauthorized");
   }
 
-  const newProject = await response.json();
-  console.log("Project saved to database", newProject);
-  return newProject;
+  await checkUser();
+
+  try {
+    const group = await pinata.groups.create({
+      name: project,
+      // isPublic: isPublic,
+    });
+
+    const newProject = await prisma.project.create({
+      data: {
+        name: project,
+        groupId: group.id,
+        createdAt: group.createdAt,
+        updatedAt: group.updatedAt,
+        pinataUserId: group.user_id,
+        user: {
+          connect: {
+            id: session.user.id,
+          },
+        },
+      },
+    });
+
+    console.log("Project saved to database", newProject);
+    return newProject;
+  } catch (error) {
+    console.error("Error creating project:", error);
+    throw new Error("Failed to create project");
+  }
 };
