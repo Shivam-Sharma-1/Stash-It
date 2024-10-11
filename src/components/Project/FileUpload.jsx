@@ -8,9 +8,10 @@ import { useDropzone } from "react-dropzone";
 
 const FileUpload = ({ groupId }) => {
   const [uploadStatus, setUploadStatus] = useState("");
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    maxFiles: 1,
+    maxFiles: 10,
     accept: {
       "image/png": [".png"],
       "image/webp": [".webp"],
@@ -28,23 +29,29 @@ const FileUpload = ({ groupId }) => {
     onDrop: async (acceptedFiles, fileRejections) => {
       if (acceptedFiles.length > 0) {
         setUploadStatus("Uploading...");
-        const file = acceptedFiles[0];
+
         const formData = new FormData();
-        formData.append("file", file);
+        acceptedFiles.forEach((file, index) => {
+          formData.append(`file${index}`, file);
+        });
         formData.append("groupId", groupId);
 
         try {
-          await handleUpload(formData);
-          setUploadStatus("Upload successful!");
+          const result = await handleUpload(formData);
+          setUploadStatus(
+            `Successfully uploaded ${result.successCount} file(s)`
+          );
+          setUploadProgress(100);
         } catch (error) {
           console.error("Upload failed:", error);
           setUploadStatus("Upload failed. Please try again.");
+          setUploadProgress(0);
         }
       }
 
       if (fileRejections.length) {
         setUploadStatus(
-          "File rejected. Please check the file type and try again."
+          `${fileRejections.length} file(s) rejected. Please check the file types and try again.`
         );
       }
     },
@@ -69,16 +76,13 @@ const FileUpload = ({ groupId }) => {
           <p className="text-muted-foreground">
             Supported formats .jpeg .jpg .webp .png
           </p>
-          {uploadStatus && (
-            <p
-              className={
-                uploadStatus.includes("successful")
-                  ? "text-green-500"
-                  : "text-red-500"
-              }
-            >
-              {uploadStatus}
-            </p>
+          {uploadProgress > 0 && uploadProgress < 100 && (
+            <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+              <div
+                className="bg-blue-600 h-2.5 rounded-full"
+                style={{ width: `${uploadProgress}%` }}
+              ></div>
+            </div>
           )}
         </div>
       </CardContent>

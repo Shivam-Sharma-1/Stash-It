@@ -6,20 +6,36 @@ import { pinata } from "@/utils/config";
 export const handleUpload = async (formData) => {
   await checkUser();
 
-  const file = formData.get("file");
   const groupId = formData.get("groupId");
 
-  if (!file || !groupId) {
-    throw new Error("File or groupId is missing");
+  if (!groupId) {
+    throw new Error("GroupId is missing");
   }
 
-  try {
-    const upload = await pinata.upload.file(file).group(groupId);
-    console.log("uploaded", upload);
+  let successCount = 0;
+  const errors = [];
 
-    return { success: true, data: upload };
-  } catch (error) {
-    console.error("Error uploading file:", error);
-    throw new Error("Failed to upload file");
+  for (const [key, value] of formData.entries()) {
+    if (key.startsWith("file") && value instanceof File) {
+      try {
+        const upload = await pinata.upload.file(value).group(groupId);
+        console.log("uploaded", upload);
+        successCount++;
+      } catch (error) {
+        console.error(`Error uploading file ${key}:`, error);
+        errors.push(`Failed to upload ${value.name}`);
+      }
+    }
   }
+
+  if (errors.length > 0) {
+    console.error("Errors during upload:", errors);
+  }
+
+  return {
+    success: successCount > 0,
+    successCount,
+    errorCount: errors.length,
+    errors,
+  };
 };
