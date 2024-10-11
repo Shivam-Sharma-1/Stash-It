@@ -14,7 +14,7 @@ const UpdateProject = ({ initialProjectData }) => {
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} dialog={false}>
       <DialogTrigger className='w-full text-sm flex flex-row items-center justify-start gap-2 hover:bg-secondary p-2'>
-        <PencilSimple />
+        <PencilSimple className='mr-2 h-4 w-4' />
         Edit
       </DialogTrigger>
       <DialogContent onKeyDown={(e) => e.stopPropagation()}>
