@@ -6,10 +6,15 @@ import { pinata } from "@/utils/config";
 const getAssets = async (groupId) => {
   await checkUser();
 
-  const files = await pinata.listFiles().group(groupId).all();
-  console.log("Got-Assets", files);
+  try {
+    const files = await pinata.listFiles().group(groupId);
 
-  return files;
+    console.log("Assets fetched from database", files);
+    return files;
+  } catch (error) {
+    console.error("Error uploading assets:", error);
+    throw new Error(`Failed to upload asset: ${error.message}`);
+  }
 };
 
 export default getAssets;
