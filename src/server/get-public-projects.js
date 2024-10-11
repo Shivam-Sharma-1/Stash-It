@@ -2,25 +2,21 @@
 
 import { checkUser } from "@/lib/checkUser";
 import { prisma } from "../../prisma/prisma";
-import { auth } from "@/utils/auth";
 
-export const getProjects = async () => {
-  const session = await auth();
-
-  if (!session) {
-    throw new Error("Unauthorized");
-  }
-
+export const getPublicProjects = async () => {
   await checkUser();
 
   try {
     const projects = await prisma.project.findMany({
       where: {
-        userId: session.user.id,
+        isPublic: true,
+      },
+      orderBy: {
+        createdAt: "desc",
       },
     });
 
-    console.log("Projects fetched from database", projects);
+    console.log("Public projects fetched from database", projects);
     return projects;
   } catch (error) {
     console.error("Error fetching projects:", error);
@@ -28,4 +24,4 @@ export const getProjects = async () => {
   }
 };
 
-export default getProjects;
+export default getPublicProjects;

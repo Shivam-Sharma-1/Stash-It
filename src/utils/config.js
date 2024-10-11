@@ -1,8 +1,9 @@
 "server only";
 
+import { PINATA_GATEWAY_URL, PINATA_JWT } from "@/lib/constants";
 import { PinataSDK } from "pinata-web3";
 
 export const pinata = new PinataSDK({
-  pinataJwt: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiI3ZjEzZGJjYS02YWQxLTQ1N2MtYTY3MS01OGZkN2FlNzg0NTYiLCJlbWFpbCI6ImFrODg4NDU1YWtAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBpbl9wb2xpY3kiOnsicmVnaW9ucyI6W3siZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjEsImlkIjoiRlJBMSJ9LHsiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjEsImlkIjoiTllDMSJ9XSwidmVyc2lvbiI6MX0sIm1mYV9lbmFibGVkIjpmYWxzZSwic3RhdHVzIjoiQUNUSVZFIn0sImF1dGhlbnRpY2F0aW9uVHlwZSI6InNjb3BlZEtleSIsInNjb3BlZEtleUtleSI6IjkwN2Q0YTYxYjI2MTE0ZDQ4NmMwIiwic2NvcGVkS2V5U2VjcmV0IjoiOTBiYzBjNjg2YjNmY2EzZTM3OTBiZmFmNmM3NzkzMmVmZWY2YzhkNzUwZjk5MTA4NDA3MDE2YzY1ZmE4NjUyZSIsImV4cCI6MTc1OTY2Nzg2NH0.Jvxg6CvMuv4J7wVeCdPqZI7qD77eFYsjvHufFX3t700`,
-  pinataGateway: `${process.env.NEXT_PUBLIC_GATEWAY_URL}`,
+  pinataJwt: PINATA_JWT,
+  pinataGateway: PINATA_GATEWAY_URL,
 });

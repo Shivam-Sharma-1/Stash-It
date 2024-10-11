@@ -3,12 +3,15 @@
 import { handleUpload } from "@/server/handle-upload";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import React from "react";
+import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 
 const FileUpload = ({ groupId }) => {
+  const [uploadStatus, setUploadStatus] = useState("");
+  const [uploadProgress, setUploadProgress] = useState(0);
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    maxFiles: 1,
+    maxFiles: 10,
     accept: {
       "image/png": [".png"],
       "image/webp": [".webp"],
@@ -23,14 +26,33 @@ const FileUpload = ({ groupId }) => {
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
         [".docx"],
     },
-    onDrop: async (acceptFiles, fileRejections) => {
-      if (acceptFiles.length > 0) {
-        console.log("accepted");
-        handleUpload(acceptFiles[0], groupId);
+    onDrop: async (acceptedFiles, fileRejections) => {
+      if (acceptedFiles.length > 0) {
+        setUploadStatus("Uploading...");
+
+        const formData = new FormData();
+        acceptedFiles.forEach((file, index) => {
+          formData.append(`file${index}`, file);
+        });
+        formData.append("groupId", groupId);
+
+        try {
+          const result = await handleUpload(formData);
+          setUploadStatus(
+            `Successfully uploaded ${result.successCount} file(s)`
+          );
+          setUploadProgress(100);
+        } catch (error) {
+          console.error("Upload failed:", error);
+          setUploadStatus("Upload failed. Please try again.");
+          setUploadProgress(0);
+        }
       }
 
       if (fileRejections.length) {
-        console.log("rejected");
+        setUploadStatus(
+          `${fileRejections.length} file(s) rejected. Please check the file types and try again.`
+        );
       }
     },
   });
@@ -54,6 +76,15 @@ const FileUpload = ({ groupId }) => {
           <p className="text-muted-foreground">
             Supported formats .jpeg .jpg .webp .png
           </p>
+          {uploadProgress > 0 && uploadProgress < 100 && (
+            <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+              <div
+                className="bg-blue-600 h-2.5 rounded-full"
+                style={{ width: `${uploadProgress}%` }}
+              ></div>
+              {uploadStatus}
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>

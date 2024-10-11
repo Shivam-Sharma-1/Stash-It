@@ -5,7 +5,6 @@ import { auth } from "@/utils/auth";
 
 const Header = async () => {
   const session = await auth();
-  console.log(session);
 
   return (
     <header className="w-full h-[80px] bg-gray-300 flex items-center justify-between px-10">

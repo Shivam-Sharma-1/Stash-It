@@ -4,15 +4,18 @@ import React from "react";
 import NewProject from "./NewProject";
 import Header from "../Header";
 import ProjectActions from "./ProjectActions";
+import { checkUser } from "@/lib/checkUser";
 
 const Dashboard = async () => {
+  await checkUser();
+
   const groupsList = await getProjects();
 
   const myProjects = groupsList ? (
     groupsList.map((group) => (
       <div key={group.id} className="bg-gray-400 w-fit px-4 py-2 rounded-md">
-        <Link href={`dashboard/${group.id}`}>{group.name}</Link>
-        <ProjectActions groupId={group.id} />
+        <Link href={`dashboard/${group.groupId}`}>{group.name}</Link>
+        <ProjectActions groupId={group.groupId} />
       </div>
     ))
   ) : (
