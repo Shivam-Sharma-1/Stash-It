@@ -72,14 +72,15 @@ model Authenticator {
 }
 
 model Project {
-  id           String @default(cuid())
+  id           String  @default(cuid())
   name         String
   userId       String
   pinataUserId String
   createdAt    String
-  groupId      String @unique
+  groupId      String  @unique
   updatedAt    String
-  user         User   @relation(fields: [userId], references: [id])
+  isPublic     Boolean @default(false)
+  user         User    @relation(fields: [userId], references: [id])
 
   @@id([id, groupId])
 }
