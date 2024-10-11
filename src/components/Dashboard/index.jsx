@@ -1,27 +1,22 @@
-import { getProjects } from '@/server/get-projects';
-import Link from 'next/link';
-import React from 'react';
+import React, { Suspense } from 'react';
 import NewProject from './NewProject';
 import Header from '../Navbar';
-import ProjectActions from './ProjectActions';
 import { checkUser } from '@/lib/checkUser';
+import ProjectsList from './ProjectsList';
+import ProjectListSkeleton from './ProjectListSkeleton';
+import { getQueryClient } from '@/lib/get-query-client';
+import getProjects from '@/server/get-projects';
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
 const Dashboard = async () => {
   await checkUser();
+  const queryClient = getQueryClient();
 
-  const groupsList = await getProjects();
-
-  const myProjects = groupsList ? (
-    groupsList.map((group) => (
-      <div key={group.id} className='bg-gray-400 w-fit px-4 py-2 rounded-md'>
-        <Link href={`dashboard/${group.groupId}`}>{group.name}</Link>
-        <ProjectActions groupId={group.groupId} />
-      </div>
-    ))
-  ) : (
-    <p>No Projects</p>
-  );
-
+  await queryClient.prefetchInfiniteQuery({
+    queryKey: ['projects'],
+    queryFn: ({ pageParam }) => getProjects({ pageParam }),
+    initialPageParam: '',
+  });
   return (
     <main className='w-full flex flex-col'>
       <Header />
@@ -30,7 +25,13 @@ const Dashboard = async () => {
           <h1 className='text-3xl font-semibold'>My Projects</h1>
           <NewProject />
         </div>
-        <div>{myProjects}</div>
+        <div>
+          <HydrationBoundary state={dehydrate(queryClient)}>
+            <Suspense fallback={<ProjectListSkeleton />}>
+              <ProjectsList />
+            </Suspense>
+          </HydrationBoundary>
+        </div>
       </div>
     </main>
   );
