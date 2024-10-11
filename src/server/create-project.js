@@ -17,7 +17,7 @@ export const createProject = async ({ project, isPublic }) => {
   try {
     const group = await pinata.groups.create({
       name: project,
-      // isPublic: isPublic,
+      isPublic: isPublic,
     });
 
     const newProject = await prisma.project.create({
@@ -27,6 +27,7 @@ export const createProject = async ({ project, isPublic }) => {
         createdAt: group.createdAt,
         updatedAt: group.updatedAt,
         pinataUserId: group.user_id,
+        isPublic: isPublic,
         user: {
           connect: {
             id: session.user.id,
