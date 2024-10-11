@@ -1,22 +1,31 @@
 "use server";
 
 import { checkUser } from "@/lib/checkUser";
-import { pinata } from "@/utils/config";
+import { prisma } from "@/prisma/prisma";
+import { auth } from "@/utils/auth";
 
 export const getProjects = async () => {
-  await checkUser();
+  const session = await auth();
 
-  // const groupsList = await pinata.groups.list().all();
-  const response = await fetch(`${BASE_URL}/api/projects`, {
-    method: "GET",
-    cache: "no-store",
-  });
-
-  if (!response.ok) {
-    throw new Error(`Failed to get projects: ${response.statusText}`);
+  if (!session) {
+    throw new Error("Unauthorized");
   }
 
-  const data = await response.json();
+  await checkUser();
 
-  return data;
+  try {
+    const projects = await prisma.project.findMany({
+      where: {
+        userId: session.user.id,
+      },
+    });
+
+    console.log("Projects fetched from database", projects);
+    return projects;
+  } catch (error) {
+    console.error("Error fetching projects:", error);
+    throw new Error("Failed to fetch projects");
+  }
 };
+
+export default getProjects;
