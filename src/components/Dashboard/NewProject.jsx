@@ -1,4 +1,5 @@
-import React from "react";
+'use client';
+import React, { useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -6,22 +7,28 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import NewProjectForm from "./NewProjectForm";
+} from '@/components/ui/dialog';
+import NewProjectForm from './NewProjectForm';
+import { Button } from '../ui/button';
+import { FolderPlus } from '@phosphor-icons/react/dist/ssr';
 
 const NewProject = () => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   return (
-    <Dialog>
-      <DialogTrigger className="px-4 py-2 bg-gray-500 rounded-md">
-        Create Project
+    <Dialog open={isDialogOpen} onOpenChange={(open) => setIsDialogOpen(open)}>
+      <DialogTrigger asChild>
+        <Button className='flex flex-row gap-2 items-center'>
+          Create Project
+          <FolderPlus size={26} color='#ffffff' weight='duotone' />
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Create a new project</DialogTitle>
-          <DialogDescription>
-            <NewProjectForm />
-          </DialogDescription>
         </DialogHeader>
+        <DialogDescription>
+          <NewProjectForm setIsDialogOpen={setIsDialogOpen} />
+        </DialogDescription>
       </DialogContent>
     </Dialog>
   );

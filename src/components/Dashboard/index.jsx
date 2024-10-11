@@ -27,7 +27,7 @@ const Dashboard = async () => {
       <Header />
       <div className='w-full flex flex-col gap-4 px-10 py-6'>
         <div className='w-full flex justify-between items-center flex-wrap'>
-          <h1>My Projects</h1>
+          <h1 className='text-3xl font-semibold'>My Projects</h1>
           <NewProject />
         </div>
         <div>{myProjects}</div>

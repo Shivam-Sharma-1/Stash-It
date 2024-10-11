@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -13,46 +13,60 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import DOMPurify from "dompurify";
-import { Switch } from "../ui/switch";
-import { createProject } from "@/server/create-project";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import DOMPurify from 'dompurify';
+import { Switch } from '../ui/switch';
+import { createProject } from '@/server/create-project';
+import { FolderPlus } from '@phosphor-icons/react/dist/ssr';
+import { useState } from 'react';
+import { toast } from 'sonner';
+import { Loader2 } from 'lucide-react';
 
 const formSchema = z.object({
   project: z
     .string()
-    .min(1, {
-      message: "Project name must be at least 2 characters.",
+    .min(2, {
+      message: 'Project name must have atleast 2 characters.',
     })
     .transform((val) => DOMPurify.sanitize(val)),
   isPublic: z.boolean().default(false),
 });
 
-const NewProjectForm = () => {
+const NewProjectForm = ({ setIsDialogOpen }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      project: "",
+      project: '',
       isPublic: false,
     },
   });
 
   const onSubmit = async ({ project, isPublic }) => {
-    await createProject({ project, isPublic });
+    setIsLoading(true);
+    const res = await createProject({ project, isPublic });
+    if (res.newProject) {
+      toast.success('Created Project: ' + project);
+    } else {
+      toast.error('An error occured while creating your project');
+    }
+    setIsLoading(false);
+    form.reset();
+    setIsDialogOpen(false);
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
         <FormField
           control={form.control}
-          name="project"
+          name='project'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Project Name:</FormLabel>
+              <FormLabel>Project Name</FormLabel>
               <FormControl>
-                <Input placeholder="Enter project name" {...field} />
+                <Input placeholder='Enter project name' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -60,11 +74,11 @@ const NewProjectForm = () => {
         />
         <FormField
           control={form.control}
-          name="isPublic"
+          name='isPublic'
           render={({ field }) => (
-            <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-              <div className="space-y-0.5">
-                <FormLabel className="text-base">
+            <FormItem className='flex flex-row items-center justify-between rounded-lg border p-4'>
+              <div className='space-y-0.5'>
+                <FormLabel className='text-base text-foreground'>
                   Is the project public?
                 </FormLabel>
                 <FormDescription>
@@ -80,7 +94,23 @@ const NewProjectForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Create Project</Button>
+        <Button
+          className='w-full flex flex-row gap-2 items-center'
+          type='submit'
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <>
+              Creating Project
+              <Loader2 className='animate-spin' />
+            </>
+          ) : (
+            <>
+              Create Project
+              <FolderPlus size={22} color='#ffffff' weight='duotone' />
+            </>
+          )}
+        </Button>
       </form>
     </Form>
   );

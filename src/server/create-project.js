@@ -1,15 +1,15 @@
-"use server";
+'use server';
 
-import { checkUser } from "@/lib/checkUser";
-import { pinata } from "@/utils/config";
-import { auth } from "@/utils/auth";
-import { prisma } from "../../prisma/prisma";
+import { checkUser } from '@/lib/checkUser';
+import { pinata } from '@/utils/config';
+import { auth } from '@/utils/auth';
+import { prisma } from '../../prisma/prisma';
 
 export const createProject = async ({ project, isPublic }) => {
   const session = await auth();
 
   if (!session) {
-    throw new Error("Unauthorized");
+    throw new Error('Unauthorized');
   }
 
   await checkUser();
@@ -36,10 +36,10 @@ export const createProject = async ({ project, isPublic }) => {
       },
     });
 
-    console.log("Project saved to database", newProject);
-    return newProject;
+    console.log('Project saved to database', newProject);
+    return { newProject };
   } catch (error) {
-    console.error("Error creating project:", error);
-    throw new Error("Failed to create project");
+    console.error('Error creating project:', error);
+    throw new Error('Failed to create project');
   }
 };
