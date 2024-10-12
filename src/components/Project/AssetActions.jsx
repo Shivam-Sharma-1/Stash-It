@@ -1,17 +1,20 @@
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { Button } from "../ui/button";
-import { PiTrash } from "react-icons/pi";
-import { deleteAsset } from "@/server/delete-asset";
-import UpdateAsset from "./UpdateAsset";
-import ShareAsset from "./ShareAsset";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { BsThreeDotsVertical } from 'react-icons/bs';
+import { Button } from '../ui/button';
+import { PiTrash } from 'react-icons/pi';
+import { deleteAsset } from '@/server/delete-asset';
+import UpdateAsset from './UpdateAsset';
+import ShareAsset from './ShareAsset';
 
 const handleDelete = async (cid) => {
   const res = await deleteAsset({ cid });
@@ -19,19 +22,28 @@ const handleDelete = async (cid) => {
 
 const AssetActions = ({ cid }) => {
   return (
-    <Popover>
-      <PopoverTrigger>
+    <DropdownMenu dialog={false}>
+      <DropdownMenuTrigger>
         <BsThreeDotsVertical />
-      </PopoverTrigger>
-      <PopoverContent>
-        <UpdateAsset cid={cid} />
-        <Button onClick={() => handleDelete(cid)}>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuLabel>Asset Actions</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild onClick={(e) => e.preventDefault()}>
+          <UpdateAsset cid={cid} />
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => handleDelete(cid)}
+          className='cursor-pointer hover:bg-secondary'
+        >
+          <PiTrash className='mr-2' />
           Delete
-          <PiTrash />
-        </Button>
-        <ShareAsset cid={cid} />
-      </PopoverContent>
-    </Popover>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <ShareAsset cid={cid} />
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 
