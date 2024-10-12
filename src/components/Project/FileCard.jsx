@@ -2,6 +2,7 @@
 import React from 'react';
 import { Card, CardContent } from '../ui/card';
 import Image from 'next/image';
+import { FileAudio, Video } from '@phosphor-icons/react';
 
 export default function FileCard({ fileData }) {
   const type = fileData.mime_type;
@@ -9,8 +10,8 @@ export default function FileCard({ fileData }) {
   return (
     <Card className='hover:bg-secondary hover:cursor-pointer'>
       <CardContent className='p-4'>
-        <div className='flex aspect-square flex-col items-center justify-center p-2'>
-          <div>
+        <div className='flex w-full aspect-square flex-col items-center justify-center p-2'>
+          <div className='w-full h-full flex items-center justify-center'>
             {type.startsWith('image/') ? (
               <Image
                 priority
@@ -21,10 +22,26 @@ export default function FileCard({ fileData }) {
                 width={350}
                 height={350}
               />
-            ) : type.startsWith('video/') ? (
-              <video controls src={fileData.url} />
-            ) : type.startsWith('audio/') ? (
-              <audio controls src={fileData.url} />
+            ) : type.startsWith('video/') || type.startsWith('audio/') ? (
+              <a
+                data-fancybox
+                data-type='html5video'
+                controls
+                href={fileData.url}
+                className='w-full h-full items-center justify-center flex'
+              >
+                {type.startsWith('video/') && (
+                  <Video
+                    size={80}
+                    className='min-w-full'
+                    color='#ff4444'
+                    weight='duotone'
+                  />
+                )}
+                {type.startsWith('audio/') && (
+                  <FileAudio size={80} color='#ff4444' weight='duotone' />
+                )}
+              </a>
             ) : (
               <p>Unsupported file type</p>
             )}
