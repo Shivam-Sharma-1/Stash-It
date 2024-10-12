@@ -50,7 +50,7 @@ export default function FileCard({ fileData }) {
         </div>
         <div className='flex flex-row justify-between items-center text-lg font-medium w-full'>
           <span className='w-full truncate'>{fileData.metadata.name}</span>
-          <AssetActions cid={fileData.ipfs_pin_hash} />
+          <AssetActions cid={fileData.ipfs_pin_hash} asset={fileData} />
         </div>
       </CardContent>
     </Card>

@@ -20,7 +20,7 @@ const handleDelete = async (cid) => {
   const res = await deleteAsset({ cid });
 };
 
-const AssetActions = ({ cid }) => {
+const AssetActions = ({ cid, asset }) => {
   return (
     <DropdownMenu dialog={false}>
       <DropdownMenuTrigger>
@@ -30,7 +30,7 @@ const AssetActions = ({ cid }) => {
         <DropdownMenuLabel>Asset Actions</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild onClick={(e) => e.preventDefault()}>
-          <UpdateAsset cid={cid} />
+          <UpdateAsset asset={asset} cid={cid} />
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => handleDelete(cid)}
