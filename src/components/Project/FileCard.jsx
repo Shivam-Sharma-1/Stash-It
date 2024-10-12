@@ -16,7 +16,7 @@ export default function FileCard({ fileData }) {
               <Image
                 priority
                 data-fancybox='gallery'
-                className='cursor-pointer border-r-2'
+                className='cursor-pointer'
                 src={fileData.url ?? ''}
                 alt='file'
                 width={350}
@@ -47,8 +47,8 @@ export default function FileCard({ fileData }) {
             )}
           </div>
         </div>
-        <div className='flex flex-row justify-between items-center text-lg font-medium'>
-          <span className='line-clamp-1'>{fileData.metadata.name}</span>
+        <div className='flex flex-row justify-between items-center text-lg font-medium w-full'>
+          <span className='w-full truncate'>{fileData.metadata.name}</span>
         </div>
       </CardContent>
     </Card>

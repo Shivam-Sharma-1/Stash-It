@@ -7,11 +7,13 @@ import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
+import { useQueryClient } from '@tanstack/react-query';
 
 const FileUpload = ({ groupId, setIsModalOpen }) => {
   const [uploadStatus, setUploadStatus] = useState('');
   const [isUploading, setUploading] = useState(false);
   const [uploadResult, setUploadResult] = useState(null);
+  const queryClient = useQueryClient();
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     maxFiles: 10,
@@ -51,6 +53,17 @@ const FileUpload = ({ groupId, setIsModalOpen }) => {
               `${result.errorCount} assets failed to upload. Please try again later.`
             );
           }
+          if (result.successCount > 0) {
+            queryClient.invalidateQueries({
+              queryKey: [
+                'assets',
+                {
+                  groupId,
+                },
+              ],
+              refetchType: 'all',
+            });
+          }
         } catch (error) {
           console.error('Upload failed:', error);
         }
@@ -78,11 +91,11 @@ const FileUpload = ({ groupId, setIsModalOpen }) => {
             <>
               <p className='text-muted-foreground text-2xl'>
                 {isDragActive
-                  ? 'Drop your image here!'
-                  : 'Start by uploading an image'}
+                  ? 'Drop your asset file here.'
+                  : 'Start by uploading an asset'}
               </p>
               <p className='text-muted-foreground'>
-                Supported formats .jpeg .jpg .webp .png
+                Supported formats include image, video, docs, pdf
               </p>
             </>
           )}
