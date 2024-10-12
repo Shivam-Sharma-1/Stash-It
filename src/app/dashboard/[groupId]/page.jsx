@@ -1,6 +1,7 @@
 import ProjectPage from '@/components/Project';
 import React from 'react';
 import { prisma } from '../../../../prisma/prisma';
+import { notFound } from 'next/navigation';
 
 const page = async ({ params }) => {
   const { groupId } = params;
@@ -10,6 +11,7 @@ const page = async ({ params }) => {
       groupId: groupId,
     },
   });
+  if (!projectData) return notFound();
   return (
     <div>
       <ProjectPage projectData={projectData} groupId={groupId} />

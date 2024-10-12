@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import {
   Dialog,
@@ -13,11 +14,15 @@ import { Loader2 } from 'lucide-react';
 import { deleteProject } from '@/server/delete-project';
 import { toast } from 'sonner';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 const DeleteProjectButton = ({ projectData }) => {
+  const { groupId: groupIdParam } = useParams();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const queryClient = useQueryClient();
+  const router = useRouter();
   const { mutateAsync: handleDeleteMutation } = useMutation({
     mutationFn: (groupId) => deleteProject({ groupId }),
     onSuccess: ({ deletedProject }) => {
@@ -30,6 +35,9 @@ const DeleteProjectButton = ({ projectData }) => {
     onSettled: () => {
       setIsLoading(false);
       setIsDialogOpen(false);
+      if (groupIdParam) {
+        router.push('/dashboard');
+      }
     },
     onError: (error) => {
       toast.error('An error occured while deleting your project');

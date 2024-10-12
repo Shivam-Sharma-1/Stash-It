@@ -4,6 +4,8 @@ import { checkUser } from '@/lib/checkUser';
 import { pinata } from '@/utils/config';
 import { prisma } from '../../prisma/prisma';
 import { auth } from '@/utils/auth';
+import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 
 export const deleteProject = async ({ groupId }) => {
   const session = await auth();
@@ -32,6 +34,7 @@ export const deleteProject = async ({ groupId }) => {
     });
 
     console.log('Project deleted from database', deletedProject);
+    revalidatePath('/dashboard');
     return { deletedProject };
   } catch (error) {
     console.error('Error deleting project:', error);
