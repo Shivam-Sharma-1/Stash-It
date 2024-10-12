@@ -19,6 +19,7 @@ const Logout = () => {
           <Button
             variant='ghost'
             onClick={() => signOut({ redirectTo: '/auth' })}
+            className='px-2'
           >
             <SignOut size={32} color='#ff4444' weight='duotone' />
           </Button>

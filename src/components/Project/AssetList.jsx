@@ -34,6 +34,11 @@ export default function AssetList({ initialData, groupId, isExplore }) {
               <FileCard isExplore={isExplore} key={file.id} fileData={file} />
             ))
           )}
+        {data.pages.length == 1 && data.pages[0].files.length == 0 && (
+          <div className='col-span-full'>
+            There are no assets in this project.
+          </div>
+        )}
       </div>
       <InfiniteScroll
         isLoading={isFetching}

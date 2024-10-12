@@ -33,7 +33,7 @@ export default function ProjectCard({ projectData, isExplore = false }) {
         </Link>
         <div className='flex flex-row justify-between items-center text-lg font-medium'>
           <Link href={`/dashboard/${projectData.groupId}`}>
-            <span>{projectData.name}</span>
+            <span className='truncate'>{projectData.name}</span>
           </Link>
           {!isExplore && <ProjectActions projectData={projectData} />}
         </div>
