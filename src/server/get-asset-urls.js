@@ -4,6 +4,7 @@ import { pinata } from '@/utils/config';
 
 export async function getAssetUrls(cids) {
   await checkUser();
+  console.log(cids);
   const urls = {};
   await Promise.all(
     cids.map(async (cid) => {
@@ -11,6 +12,5 @@ export async function getAssetUrls(cids) {
       urls[cid] = result;
     })
   );
-
   return urls;
 }
