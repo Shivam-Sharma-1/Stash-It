@@ -7,7 +7,7 @@ import AssetList from './AssetList';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getQueryClient } from '@/lib/get-query-client';
 
-const ProjectAssets = async ({ groupId }) => {
+const ProjectAssets = async ({ groupId, isExplore }) => {
   const queryClient = getQueryClient();
   const initialData = await getAssets({ groupId, page: 0 });
   await queryClient.prefetchInfiniteQuery({
@@ -32,7 +32,11 @@ const ProjectAssets = async ({ groupId }) => {
     >
       <div className='flex flex-col w-full gap-2'>
         <HydrationBoundary state={dehydrate(queryClient)}>
-          <AssetList groupId={groupId} initialData={initialData} />
+          <AssetList
+            isExplore={isExplore}
+            groupId={groupId}
+            initialData={initialData}
+          />
         </HydrationBoundary>
       </div>
     </Fancybox>

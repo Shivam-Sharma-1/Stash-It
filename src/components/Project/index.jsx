@@ -6,7 +6,7 @@ import ProjectActions from '../Dashboard/ProjectActions';
 import { checkUser } from '@/lib/checkUser';
 import Link from 'next/link';
 
-const ProjectPage = async ({ groupId, projectData }) => {
+const ProjectPage = async ({ groupId, projectData, isExplore }) => {
   await checkUser();
 
   return (
@@ -16,19 +16,23 @@ const ProjectPage = async ({ groupId, projectData }) => {
         <div className='w-full flex justify-between items-center flex-wrap'>
           <div className='flex flex-row gap-2 items-center'>
             <h1 className='text-3xl font-semibold'>
-              <Link className='hover:text-primary' href={'/dashboard'}>
+              <Link
+                className='hover:text-primary'
+                href={isExplore ? '/explore' : '/dashboard'}
+              >
                 {' '}
                 Projects
               </Link>{' '}
               &gt; {projectData.name}
             </h1>
-            <ProjectActions projectData={projectData} groupId={groupId} />
+            {!isExplore && (
+              <ProjectActions projectData={projectData} groupId={groupId} />
+            )}
           </div>
-
-          <UploadFile groupId={groupId} />
+          {!isExplore && <UploadFile groupId={groupId} />}
         </div>
         <div>
-          <ProjectAssets groupId={groupId} />
+          <ProjectAssets isExplore={isExplore} groupId={groupId} />
         </div>
       </div>
     </main>

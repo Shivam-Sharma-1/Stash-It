@@ -1,26 +1,20 @@
 'use client';
-
 import { useInfiniteQuery } from '@tanstack/react-query';
 import React from 'react';
 import InfiniteScroll from '../InfiniteScroll';
-import getAssets from '@/server/get-assets';
-import FileCard from './FileCard';
+import ProjectCard from '../Project/ProjectCard';
+import getPublicProjects from '@/server/get-public-projects';
 
-export default function AssetList({ initialData, groupId, isExplore }) {
+export default function PublicProjectsList({ initialData }) {
   const { data, isFetching, fetchNextPage, hasNextPage } = useInfiniteQuery({
-    queryKey: [
-      'assets',
-      {
-        groupId,
-      },
-    ],
-    queryFn: ({ pageParam }) => getAssets({ groupId, page: pageParam }),
-    initialPageParam: 0,
+    queryKey: ['public-projects'],
+    queryFn: ({ pageParam }) => getPublicProjects({ cursorId: pageParam }),
+    initialPageParam: '',
     getNextPageParam: (lastPage) =>
-      lastPage.hasNextPage ? lastPage.page + 1 : undefined,
-    getPreviousPageParam: (firstPage) => firstPage.page,
+      lastPage.hasNextPage ? lastPage.cursor : undefined,
+    getPreviousPageParam: (firstPage) => firstPage.cursor,
     initialData: initialData
-      ? { pages: [initialData], pageParams: [0] }
+      ? { pages: [initialData], pageParams: [''] }
       : undefined,
     staleTime: 60000, // 1 minute
   });
@@ -30,8 +24,12 @@ export default function AssetList({ initialData, groupId, isExplore }) {
       <div className='grid grid-cols-1  md:grid-cols-5 lg:grid-cols-7 gap-4'>
         {data?.pages &&
           data.pages.map((page) =>
-            page.files.map((file) => (
-              <FileCard isExplore={isExplore} key={file.id} fileData={file} />
+            page.projects.map((project) => (
+              <ProjectCard
+                isExplore={true}
+                key={project.id}
+                projectData={project}
+              />
             ))
           )}
       </div>

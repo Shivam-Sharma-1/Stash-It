@@ -4,11 +4,17 @@ import { Folder, FolderLock } from '@phosphor-icons/react/dist/ssr';
 import ProjectActions from '../Dashboard/ProjectActions';
 import Link from 'next/link';
 
-export default function ProjectCard({ projectData }) {
+export default function ProjectCard({ projectData, isExplore = false }) {
   return (
     <Card className='hover:bg-secondary hover:cursor-pointer'>
       <CardContent className='p-4'>
-        <Link href={`/dashboard/${projectData.groupId}`}>
+        <Link
+          href={
+            isExplore
+              ? `/explore/${projectData.groupId}`
+              : `/dashboard/${projectData.groupId}`
+          }
+        >
           <div className='flex aspect-square flex-col items-center justify-center p-10'>
             {projectData.isPublic ? (
               <Folder
@@ -29,7 +35,7 @@ export default function ProjectCard({ projectData }) {
           <Link href={`/dashboard/${projectData.groupId}`}>
             <span>{projectData.name}</span>
           </Link>
-          <ProjectActions projectData={projectData} />
+          {!isExplore && <ProjectActions projectData={projectData} />}
         </div>
       </CardContent>
     </Card>

@@ -1,7 +1,7 @@
 import React from 'react';
-import Navbar from '../Navbar/Navbar';
 import Hero from './Hero';
 import FeatureSection from './FeatureSection';
+import Navbar from '../Navbar';
 
 export default function LandingPage() {
   return (

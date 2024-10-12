@@ -2,10 +2,10 @@
 import React from 'react';
 import { Card, CardContent } from '../ui/card';
 import Image from 'next/image';
-import { FileAudio, Video } from '@phosphor-icons/react';
+import { File, FileAudio, Video } from '@phosphor-icons/react';
 import AssetActions from './AssetActions';
 
-export default function FileCard({ fileData }) {
+export default function FileCard({ fileData, isExplore }) {
   const type = fileData.mime_type;
   console.log(fileData);
   return (
@@ -44,13 +44,17 @@ export default function FileCard({ fileData }) {
                 )}
               </a>
             ) : (
-              <p>Unsupported file type</p>
+              <File size={80} color='#ff4444' weight='duotone' />
             )}
           </div>
         </div>
         <div className='flex flex-row justify-between items-center text-lg font-medium w-full'>
           <span className='w-full truncate'>{fileData.metadata.name}</span>
-          <AssetActions cid={fileData.ipfs_pin_hash} asset={fileData} />
+          <AssetActions
+            isExplore={isExplore}
+            cid={fileData.ipfs_pin_hash}
+            asset={fileData}
+          />
         </div>
       </CardContent>
     </Card>

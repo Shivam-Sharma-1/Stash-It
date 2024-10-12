@@ -18,8 +18,9 @@ import ShareAsset from './ShareAsset';
 import { useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import { toast } from 'sonner';
+import DownloadButton from './DownloadButton';
 
-const AssetActions = ({ cid, asset }) => {
+const AssetActions = ({ cid, asset, isExplore }) => {
   const queryClient = useQueryClient();
   const { groupId } = useParams();
   const handleDelete = async (cid) => {
@@ -47,18 +48,25 @@ const AssetActions = ({ cid, asset }) => {
       <DropdownMenuContent>
         <DropdownMenuLabel>Asset Actions</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem asChild onClick={(e) => e.preventDefault()}>
-          <UpdateAsset asset={asset} cid={cid} />
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={() => handleDelete(cid)}
-          className='cursor-pointer hover:bg-secondary'
-        >
-          <PiTrash className='mr-2' />
-          Delete
-        </DropdownMenuItem>
+        {!isExplore && (
+          <>
+            <DropdownMenuItem asChild onClick={(e) => e.preventDefault()}>
+              <UpdateAsset asset={asset} cid={cid} />
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => handleDelete(cid)}
+              className='cursor-pointer hover:bg-secondary'
+            >
+              <PiTrash className='mr-2' />
+              Delete
+            </DropdownMenuItem>
+          </>
+        )}
         <DropdownMenuItem asChild>
           <ShareAsset cid={cid} />
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <DownloadButton filename={asset.metadata.name} cid={cid} />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
