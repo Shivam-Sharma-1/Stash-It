@@ -30,6 +30,10 @@ const FileUpload = ({ groupId, setIsModalOpen }) => {
       'application/msword': ['.doc'],
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
         ['.docx'],
+      'model/obj': ['.obj'], // OBJ 3D model file
+      'model/fbx': ['.fbx'], // FBX 3D model file
+      'model/gltf+json': ['.gltf'], // GLTF 3D model (JSON)
+      'model/gltf-binary': ['.glb'], // GLB 3D model (binary)
     },
     onDrop: async (acceptedFiles, fileRejections) => {
       if (acceptedFiles.length > 0) {
