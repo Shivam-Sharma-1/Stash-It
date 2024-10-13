@@ -6,6 +6,7 @@ import ProjectsList from './ProjectsList';
 import getProjects from '@/server/get-projects';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getQueryClient } from '@/lib/get-query-client';
+import AIGenerator from './AIGenerator/AIGenerator';
 
 const Dashboard = async () => {
   await checkUser();
@@ -22,7 +23,10 @@ const Dashboard = async () => {
       <div className='w-full flex flex-col gap-4 px-10 py-6'>
         <div className='w-full flex justify-between items-center flex-wrap'>
           <h1 className='text-3xl font-semibold'>My Projects</h1>
-          <NewProject />
+          <div className='flex flex-row items-center gap-3'>
+            <NewProject />
+            <AIGenerator />
+          </div>
         </div>
         <div>
           <HydrationBoundary state={dehydrate(queryClient)}>

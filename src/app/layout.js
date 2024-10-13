@@ -34,7 +34,7 @@ export default function RootLayout({ children }) {
         <AuthContext>
           <Providers>
             {children}
-            <ReactQueryDevtools initialIsOpen={false} />
+            {/* <ReactQueryDevtools initialIsOpen={false} /> */}
           </Providers>
         </AuthContext>
         <Toaster />

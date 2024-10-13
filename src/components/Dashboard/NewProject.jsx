@@ -21,9 +21,9 @@ const NewProject = () => {
       onOpenChange={(open) => setIsDialogOpen(open)}
     >
       <DialogTrigger asChild>
-        <Button className='flex flex-row gap-2 items-center'>
+        <Button variant='outline' className='flex flex-row gap-2 items-center'>
           Create Project
-          <FolderPlus size={26} color='#ffffff' weight='duotone' />
+          <FolderPlus size={26} weight='duotone' />
         </Button>
       </DialogTrigger>
       <DialogContent>

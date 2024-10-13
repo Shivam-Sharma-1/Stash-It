@@ -21,7 +21,7 @@ const Logout = () => {
             onClick={() => signOut({ redirectTo: '/auth' })}
             className='px-2'
           >
-            <SignOut size={32} color='#ff4444' weight='duotone' />
+            <SignOut size={32} color='#ff4444' />
           </Button>
         </TooltipTrigger>
         <TooltipContent>
