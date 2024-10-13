@@ -1,4 +1,5 @@
-import React from "react";
+'use client';
+import React, { useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -6,22 +7,27 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import UpdateAssetForm from "./UpdateAssetForm";
+} from '@/components/ui/dialog';
+import UpdateAssetForm from './UpdateAssetForm';
+import { PencilSimple } from '@phosphor-icons/react/';
 
-const UpdateAsset = ({ cid }) => {
+const UpdateAsset = ({ cid, asset }) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   return (
-    <Dialog>
-      <DialogTrigger className="px-4 py-2 bg-gray-500 rounded-md">
-        Update
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+      <DialogTrigger className='w-full text-sm flex flex-row items-center justify-start hover:bg-secondary px-2 py-1.5'>
+        <PencilSimple className='mr-2 h-4 w-4' />
+        Edit
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Update the project name</DialogTitle>
-          <DialogDescription>
-            <UpdateAssetForm cid={cid} />
-          </DialogDescription>
         </DialogHeader>
+        <UpdateAssetForm
+          setIsDialogOpen={setIsDialogOpen}
+          cid={cid}
+          asset={asset}
+        />
       </DialogContent>
     </Dialog>
   );

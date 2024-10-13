@@ -1,36 +1,38 @@
-import { getProjects } from "@/server/get-projects";
-import Link from "next/link";
-import React from "react";
-import NewProject from "./NewProject";
-import Header from "../Header";
-import ProjectActions from "./ProjectActions";
-import { checkUser } from "@/lib/checkUser";
+import React, { Suspense } from 'react';
+import NewProject from './NewProject';
+import Header from '../Navbar';
+import { checkUser } from '@/lib/checkUser';
+import ProjectsList from './ProjectsList';
+import getProjects from '@/server/get-projects';
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+import { getQueryClient } from '@/lib/get-query-client';
+import AIGenerator from './AIGenerator/AIGenerator';
 
 const Dashboard = async () => {
   await checkUser();
-
-  const groupsList = await getProjects();
-
-  const myProjects = groupsList ? (
-    groupsList.map((group) => (
-      <div key={group.id} className="bg-gray-400 w-fit px-4 py-2 rounded-md">
-        <Link href={`dashboard/${group.groupId}`}>{group.name}</Link>
-        <ProjectActions groupId={group.groupId} />
-      </div>
-    ))
-  ) : (
-    <p>No Projects</p>
-  );
-
+  const queryClient = getQueryClient();
+  const initialData = await getProjects({ cursorId: '' });
+  await queryClient.prefetchInfiniteQuery({
+    queryKey: ['projects'],
+    queryFn: ({ pageParam }) => getProjects({ cursorId: pageParam }),
+    initialPageParam: '',
+  });
   return (
-    <main className="w-full flex flex-col">
+    <main className='w-full flex flex-col'>
       <Header />
-      <div className="w-full flex flex-col gap-4 px-10 py-6">
-        <div className="w-full flex justify-between items-center flex-wrap">
-          <h1>My Projects</h1>
-          <NewProject />
+      <div className='w-full flex flex-col gap-4 px-10 py-6'>
+        <div className='w-full flex justify-between items-center flex-wrap'>
+          <h1 className='text-3xl font-semibold'>My Projects</h1>
+          <div className='flex flex-row items-center gap-3'>
+            <NewProject />
+            <AIGenerator />
+          </div>
         </div>
-        <div>{myProjects}</div>
+        <div>
+          <HydrationBoundary state={dehydrate(queryClient)}>
+            <ProjectsList initialData={initialData} />
+          </HydrationBoundary>
+        </div>
       </div>
     </main>
   );

@@ -1,7 +1,7 @@
-"use server";
+'use server';
 
-import { checkUser } from "@/lib/checkUser";
-import { pinata } from "@/utils/config";
+import { checkUser } from '@/lib/checkUser';
+import { pinata } from '@/utils/config';
 
 export const updateAsset = async ({ cid, asset }) => {
   await checkUser();
@@ -12,10 +12,10 @@ export const updateAsset = async ({ cid, asset }) => {
       name: asset,
     });
 
-    console.log("Updated file:", updatedAsset);
-    return updatedAsset;
+    console.log('Updated file:', updatedAsset);
+    return { updatedAsset };
   } catch (error) {
-    console.error("Error updating file:", error);
-    throw new Error("Failed to update file:", error);
+    console.error('Error updating file:', error);
+    throw new Error('Failed to update file:', error);
   }
 };

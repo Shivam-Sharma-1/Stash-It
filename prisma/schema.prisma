@@ -72,7 +72,7 @@ model Authenticator {
 }
 
 model Project {
-  id           String  @default(cuid())
+  id           String  @unique @default(cuid())
   name         String
   userId       String
   pinataUserId String

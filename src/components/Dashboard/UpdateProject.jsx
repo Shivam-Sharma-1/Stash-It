@@ -1,27 +1,30 @@
-import React from "react";
+import React, { useState } from 'react';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import UpdateProjectForm from "./UpdateProjectForm";
+} from '@/components/ui/dialog';
+import UpdateProjectForm from './UpdateProjectForm';
+import { PencilSimple } from '@phosphor-icons/react/dist/ssr';
 
-const UpdateProject = ({ groupId }) => {
+const UpdateProject = ({ initialProjectData }) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   return (
-    <Dialog>
-      <DialogTrigger className="px-4 py-2 bg-gray-500 rounded-md">
-        Update
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen} dialog={false}>
+      <DialogTrigger className='w-full text-sm flex flex-row items-center justify-start gap-2 hover:bg-secondary p-2'>
+        <PencilSimple className='mr-2 h-4 w-4' />
+        Edit
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent onKeyDown={(e) => e.stopPropagation()}>
         <DialogHeader>
-          <DialogTitle>Update the project name</DialogTitle>
-          <DialogDescription>
-            <UpdateProjectForm groupId={groupId} />
-          </DialogDescription>
+          <DialogTitle>Edit the project</DialogTitle>
         </DialogHeader>
+        <UpdateProjectForm
+          setIsDialogOpen={setIsDialogOpen}
+          initialProjectData={initialProjectData}
+        />
       </DialogContent>
     </Dialog>
   );

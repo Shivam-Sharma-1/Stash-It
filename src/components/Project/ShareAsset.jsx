@@ -1,4 +1,5 @@
-import React from "react";
+'use client';
+import React, { useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -6,28 +7,31 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import shareAsset from "@/server/share-asset";
-
-const createUrl = async (cid) => {
-  const shareUrl = await shareAsset(cid);
-
-  return shareUrl;
-};
+} from '@/components/ui/dialog';
+import shareAsset from '@/server/share-asset';
+import { Share, ShareFat } from '@phosphor-icons/react/dist/ssr';
+import CopyLink from './CopyLink';
 
 const ShareAsset = ({ cid }) => {
-  const shareUrl = createUrl(cid);
-
+  const [shareUrl, setShareUrl] = useState(null);
+  async function getShareUrl() {
+    const shareUrlResponse = await shareAsset(cid);
+    setShareUrl(shareUrlResponse);
+  }
   return (
     <Dialog>
-      <DialogTrigger className="px-4 py-2 bg-gray-500 rounded-md">
+      <DialogTrigger
+        onClick={getShareUrl}
+        className='w-full text-sm flex flex-row items-center justify-start hover:bg-secondary px-2 py-1.5'
+      >
+        <ShareFat className='mr-2 h-4 w-4' />
         Share
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className='w-fit'>
         <DialogHeader>
-          <DialogTitle>Share this url</DialogTitle>
-          <DialogDescription>{shareUrl}</DialogDescription>
+          <DialogTitle className='w-fit'>Share this url</DialogTitle>
         </DialogHeader>
+        <CopyLink text={shareUrl} />
       </DialogContent>
     </Dialog>
   );
