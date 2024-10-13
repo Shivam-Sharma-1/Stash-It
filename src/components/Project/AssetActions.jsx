@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,17 +8,16 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { BsThreeDotsVertical } from 'react-icons/bs';
-import { Button } from '../ui/button';
-import { PiTrash } from 'react-icons/pi';
-import { deleteAsset } from '@/server/delete-asset';
-import UpdateAsset from './UpdateAsset';
-import ShareAsset from './ShareAsset';
-import { useQueryClient } from '@tanstack/react-query';
-import { useParams } from 'next/navigation';
-import { toast } from 'sonner';
-import DownloadButton from './DownloadButton';
+} from "@/components/ui/dropdown-menu";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { PiTrash } from "react-icons/pi";
+import { deleteAsset } from "@/server/delete-asset";
+import ShareAsset from "./ShareAsset";
+import { useQueryClient } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
+import { toast } from "sonner";
+import DownloadButton from "./DownloadButton";
+import UpdateAsset from "./UpdateAsset";
 
 const AssetActions = ({ cid, asset, isExplore }) => {
   const queryClient = useQueryClient();
@@ -26,18 +25,18 @@ const AssetActions = ({ cid, asset, isExplore }) => {
   const handleDelete = async (cid) => {
     const res = await deleteAsset({ cid });
     if (res) {
-      toast.success('Deleted Asset');
+      toast.success("Deleted Asset");
       queryClient.invalidateQueries({
         queryKey: [
-          'assets',
+          "assets",
           {
             groupId: groupId,
           },
         ],
-        refetchType: 'all',
+        refetchType: "all",
       });
     } else {
-      toast.error('Failed to delete asset.');
+      toast.error("Failed to delete asset.");
     }
   };
   return (
@@ -55,9 +54,9 @@ const AssetActions = ({ cid, asset, isExplore }) => {
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => handleDelete(cid)}
-              className='cursor-pointer hover:bg-secondary'
+              className="cursor-pointer hover:bg-secondary"
             >
-              <PiTrash className='mr-2' />
+              <PiTrash className="mr-2" />
               Delete
             </DropdownMenuItem>
           </>
