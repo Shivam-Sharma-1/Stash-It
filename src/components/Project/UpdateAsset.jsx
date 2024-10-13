@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { PencilSimple } from "@phosphor-icons/react/";
+import { PencilSimple } from "@phosphor-icons/react";
 import UpdateAssetForm from "./UpdateAssetForm";
 
 const UpdateAsset = ({ cid, asset }) => {
