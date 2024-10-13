@@ -4,7 +4,10 @@ import { getQueryClient } from '@/lib/get-query-client';
 import getPublicProjects from '@/server/get-public-projects';
 import PublicProjectsList from '@/components/Explore/PublicProjectsList';
 import Navbar from '@/components/Navbar';
-
+export const metadata = {
+  title: 'Explore - StashIt',
+  description: 'Your ultimate game assets hub and vault.',
+};
 const Explore = async () => {
   const queryClient = getQueryClient();
   const initialData = await getPublicProjects({ cursorId: '' });
