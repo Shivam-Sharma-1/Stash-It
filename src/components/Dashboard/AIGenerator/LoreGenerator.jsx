@@ -85,8 +85,8 @@ export const LoreGenerator = ({ setIsOpen }) => {
   }
 
   return (
-    <div className='grid grid-cols-2 w-full gap-8 justify-between'>
-      <div className='flex flex-col gap-2 col-span-1 h-full'>
+    <div className='grid grid-rows-2 md:grid-cols-2 w-full gap-8 justify-between'>
+      <div className='flex flex-col gap-2 row-span-1 md:col-span-1 w-full h-full'>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
             <FormField
@@ -156,13 +156,13 @@ export const LoreGenerator = ({ setIsOpen }) => {
           </form>
         </Form>
       </div>
-      <Card className='col-span-1 p-0 border-none'>
+      <Card className='row-span-1 md:col-span-1 p-0 border-none w-full'>
         <CardHeader className='p-0'>
           <CardTitle className='text-xl pb-2'>
             {loading ? 'Generating' : 'Generated Lore'}
           </CardTitle>
         </CardHeader>
-        <CardContent className='flex flex-col gap-2 items-center justify-between p-0'>
+        <CardContent className='flex w-full flex-col gap-2 items-center justify-between p-0'>
           {loading ? (
             <div className='flex flex-col gap-2 w-full'>
               <Skeleton className='w-full h-6' />
@@ -173,7 +173,7 @@ export const LoreGenerator = ({ setIsOpen }) => {
             </div>
           ) : lore ? (
             <>
-              <ScrollArea className='h-80 bg-secondary rounded-md p-4'>
+              <ScrollArea className='h-80 bg-secondary rounded-md p-4 w-full'>
                 <ReactMarkdown className='prose'>{lore}</ReactMarkdown>
               </ScrollArea>
             </>

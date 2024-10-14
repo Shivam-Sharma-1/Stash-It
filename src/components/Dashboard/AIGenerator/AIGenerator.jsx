@@ -27,7 +27,10 @@ export default function AIGenerator() {
           />
         </Button>
       </SheetTrigger>
-      <SheetContent className='max-h-[80vh]' side='bottom'>
+      <SheetContent
+        className='max-h-[96vh] md:max-h-[80vh] overflow-y-scroll'
+        side='bottom'
+      >
         <SheetHeader className='py-2'>
           <SheetTitle>AI Character Lore Generator</SheetTitle>
         </SheetHeader>
