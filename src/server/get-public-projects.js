@@ -12,6 +12,9 @@ export const getPublicProjects = async ({ cursorId }) => {
       where: {
         isPublic: true,
       },
+      include: {
+        user: true,
+      },
     });
 
     console.log('Projects fetched from database', projects);

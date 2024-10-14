@@ -3,6 +3,7 @@ import { Card, CardContent } from '../ui/card';
 import { Folder, FolderLock } from '@phosphor-icons/react/dist/ssr';
 import ProjectActions from '../Dashboard/ProjectActions';
 import Link from 'next/link';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 export default function ProjectCard({ projectData, isExplore = false }) {
   return (
@@ -37,6 +38,17 @@ export default function ProjectCard({ projectData, isExplore = false }) {
           </Link>
           {!isExplore && <ProjectActions projectData={projectData} />}
         </div>
+        {isExplore && (
+          <div className='flex flex-row gap-2 items-center text-sm mt-2 text-muted-foreground'>
+            <Avatar className='w-6 h-6 aspect-square'>
+              <AvatarImage src={projectData.user.image ?? ''} />
+              <AvatarFallback>
+                {projectData.user.name.charAt(0).toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+            <span>{projectData.user.name}</span>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
