@@ -1,12 +1,10 @@
-'use server';
+"use server";
 
-import { checkUser } from '@/lib/checkUser';
-import { pinata } from '@/utils/config';
-import { getAssetUrls } from './get-asset-urls';
+import { checkUser } from "@/lib/checkUser";
+import { pinata } from "@/utils/config";
+import { getAssetUrls } from "./get-asset-urls";
 
 const getAssets = async ({ groupId, page }) => {
-  await checkUser();
-
   const itemsPerPage = 10;
 
   try {
@@ -36,10 +34,10 @@ const getAssets = async ({ groupId, page }) => {
       url: urlsObject[file.ipfs_pin_hash] || null, // Use null if URL is not found
     }));
 
-    console.log('Assets fetched from database', filesWithUrls);
+    console.log("Assets fetched from database", filesWithUrls);
     return { files: filesWithUrls, page, hasNextPage };
   } catch (error) {
-    console.error('Error fetching assets:', error);
+    console.error("Error fetching assets:", error);
     throw new Error(`Failed to fetch assets: ${error.message}`);
   }
 };
