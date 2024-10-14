@@ -8,7 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 export default function ProjectCard({ projectData, isExplore = false }) {
   return (
     <Card className='hover:bg-secondary hover:cursor-pointer'>
-      <CardContent className='p-4'>
+      <CardContent className='p-2'>
         <Link
           href={
             isExplore
@@ -32,9 +32,9 @@ export default function ProjectCard({ projectData, isExplore = false }) {
             )}
           </div>
         </Link>
-        <div className='flex flex-row justify-between items-center text-lg font-medium'>
+        <div className='w-full flex flex-row justify-between items-center text-lg font-medium'>
           <Link href={`/dashboard/${projectData.groupId}`}>
-            <span className='truncate'>{projectData.name}</span>
+            <span className='w-full line-clamp-1'>{projectData.name}</span>
           </Link>
           {!isExplore && <ProjectActions projectData={projectData} />}
         </div>
