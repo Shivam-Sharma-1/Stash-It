@@ -1,11 +1,13 @@
-import ProjectPage from '@/components/Project';
-import React from 'react';
-import { prisma } from '../../../../prisma/prisma';
-import { notFound } from 'next/navigation';
+import React from "react";
+import { prisma } from "../../../../prisma/prisma";
+import { notFound } from "next/navigation";
+import PublicProjectPage from "@/components/Explore/PublicProjectPage";
+
 export const metadata = {
-  title: 'Explore - StashIt',
-  description: 'Your ultimate game assets hub and vault.',
+  title: "Explore - StashIt",
+  description: "Your ultimate game assets hub and vault.",
 };
+
 const page = async ({ params }) => {
   const { groupId } = params;
 
@@ -17,7 +19,7 @@ const page = async ({ params }) => {
   if (!projectData) return notFound();
   return (
     <div>
-      <ProjectPage
+      <PublicProjectPage
         isExplore={true}
         projectData={projectData}
         groupId={groupId}
