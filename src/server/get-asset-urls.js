@@ -1,9 +1,8 @@
-'use server';
-import { checkUser } from '@/lib/checkUser';
-import { pinata } from '@/utils/config';
+"use server";
+import { checkUser } from "@/lib/checkUser";
+import { pinata } from "@/utils/config";
 
 export async function getAssetUrls(cids) {
-  await checkUser();
   console.log(cids);
   const urls = {};
   await Promise.all(
