@@ -115,7 +115,7 @@ To get started with the project, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/stash-it.git
+   git clone https://github.com/Shivam-Sharma-1/Stash-It.git
    cd stash-it
    ```
 
