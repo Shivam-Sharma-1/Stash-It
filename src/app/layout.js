@@ -4,6 +4,7 @@ import AuthContext from '@/components/AuthContext';
 import { Sora } from 'next/font/google';
 import { Toaster } from '@/components/ui/sonner';
 import Providers from '@/components/Providers';
+import NextTopLoader from 'nextjs-toploader';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 // const geistSans = localFont({
 //   src: './fonts/GeistVF.woff',
@@ -31,6 +32,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang='en'>
       <body className={`${sora.variable} ${sora.className} antialiased`}>
+        <NextTopLoader color='#ff4444' />
         <AuthContext>
           <Providers>
             {children}
