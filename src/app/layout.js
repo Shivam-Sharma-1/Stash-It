@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang='en'>
       <body className={`${sora.variable} ${sora.className} antialiased`}>
-        <NextTopLoader color='#ff4444' />
+        <NextTopLoader color='#ff4444' showSpinner={false} />
         <AuthContext>
           <Providers>
             {children}

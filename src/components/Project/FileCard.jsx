@@ -15,7 +15,7 @@ export default function FileCard({ fileData, isExplore }) {
   const type = fileData.mime_type;
 
   return (
-    <Card className='hover:bg-secondary hover:cursor-pointer h-fit'>
+    <Card className='hover:bg-secondary hover:cursor-pointer'>
       <CardContent className='p-4'>
         <div className='flex w-full aspect-square flex-col items-center justify-center p-2'>
           <div className='w-full h-full flex items-center justify-center relative'>
