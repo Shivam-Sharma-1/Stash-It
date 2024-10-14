@@ -19,21 +19,34 @@ StashIt is a game assets storage web app that leverages the power of Next.js, Ta
 
 ## Demo
 
-[Click here!](https://stash-it.vercel.app)
+[Click here!](https://stash-it.vercel.app) to view the live deployment.
 
 ### Landing Page
+
 ![landing-pagee](https://github.com/user-attachments/assets/7f8ce162-1b52-49c3-87c2-9a5310cce561)
+
 ### My Projects Dashboard
+
 ![my projects dashboard](https://github.com/user-attachments/assets/684f2bf7-0ffd-4ee2-8ec0-8fd469a5232e)
+
 ### Explore Assets
+
 ![explore assets](https://github.com/user-attachments/assets/161e606c-2f3f-44f7-beee-5bd079f26cb1)
+
 ### Fire Preview
+
 ![file preview](https://github.com/user-attachments/assets/8403fb84-ec31-41fc-ab75-ec9125173a54)
+
 ### AI Character Lore Generator
+
 ![Ai character lore generator](https://github.com/user-attachments/assets/bbfbe676-a8d6-4f00-ba4e-fc10388f7668)
+
 ### Auth Page
+
 ![auth](https://github.com/user-attachments/assets/8c0a28da-7ddd-4403-8ffa-dffa43bd2e41)
+
 ### Single File Upload
+
 ![single upload](https://github.com/user-attachments/assets/ab02355e-aae5-4334-a87b-b365380ccb6a)
 
 ## Features
