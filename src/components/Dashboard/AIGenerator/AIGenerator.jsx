@@ -28,7 +28,7 @@ export default function AIGenerator() {
         </Button>
       </SheetTrigger>
       <SheetContent
-        className='max-h-[96vh] md:max-h-[80vh] overflow-y-scroll'
+        className='max-h-[96vh] md:max-h-[80vh] overflow-y-scroll md:overflow-y-hidden'
         side='bottom'
       >
         <SheetHeader className='py-2'>
