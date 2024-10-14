@@ -1,6 +1,6 @@
 # StashIt: Your Game Asset Hub
 
-StashIt is a game assets storage web app that leverages the power of Next.js, TailwindCSS, and Pinata. It securely stores various game assets, such as images, audio, video, and 3D models, over the IPFS network. Each file is uniquely identified by its CID, provided by Pinata, ensuring no duplicate assets. The platform also includes AI-powered features to generate character lore and images using OpenRouter API and StarryAI. Additionally, users can add metadata to their files for enhanced asset management.
+StashIt is a game assets storage web app that leverages the power of Next.js, TailwindCSS, and Pinata. It securely stores various game assets, such as images, audio, video, and 3D models, over the IPFS network. Each file is uniquely identified by its CID, provided by Pinata, ensuring no duplicate assets. The platform also includes AI-powered features to generate character lore using OpenRouter API. Additionally, users can add metadata to their files for enhanced asset management.
 
 ## Table of Contents
 
@@ -27,10 +27,9 @@ StashIt is a game assets storage web app that leverages the power of Next.js, Ta
 - Project management: create, update, and delete assets within projects
 - Public and private project options for sharing assets globally
 - Asset management: share, add, update, delete, view, and download assets
-- **Pinning and Unpinning Files**: Users can pin important files to keep them available on IPFS and unpin those they no longer need.
-
+- Pinning and Unpinning Files: Users can pin important files to keep them available on IPFS and unpin those they no longer need.
+- Pinata Pagination: Asset listing utilizes Pinata’s pagination feature to efficiently manage large numbers of files, allowing users to navigate through their assets without overloading the interface.
 - AI-powered character lore generation using [OpenRouter API (Llama model)](https://openrouter.ai/)
-- AI character image generation using [StarryAI API](https://starryai.com/)
 - OAuth authentication with Google and GitHub using Auth.js
 - PostgreSQL database provided by Aiven to store user data and connect projects
 - Animations powered by Framer Motion
@@ -74,6 +73,7 @@ GOOGLE_CLIENT_SECRET=         # Google OAuth client secret for secure authentica
 GITHUB_ID=                    # GitHub OAuth client ID for user login
 GITHUB_SECRET=                # GitHub OAuth client secret for secure authentication
 DATABASE_URL=                 # PostgreSQL connection string (provided by Aiven) for storing user data and managing projects
+OPENROUTER_API_KEY=           # OpenRouter API key for accessing AI-powered character lore generation
 ```
 
 Ensure that all required values are filled with the proper credentials.
@@ -125,6 +125,7 @@ stash-it/
 ```
 
 - `prisma/`: Prisma schema and migration files.
+- `public/`: Static files (images, icons).
 - `src/app/`: Application pages and API routes.
 - `src/components/`: Reusable React components.
 - `src/lib/`: Global utility functions and configurations.
@@ -154,4 +155,3 @@ For more detailed documentation, please refer to the official docs of the tools 
 - [TailwindCSS Documentation](https://tailwindcss.com/docs)
 - [Prisma Documentation](https://www.prisma.io/docs)
 - [OpenRouter API Documentation](https://openrouter.ai/)
-- [StarryAI API Documentation](https://starryai.com/)
