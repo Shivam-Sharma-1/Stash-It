@@ -7,7 +7,7 @@ import AssetActions from "./AssetActions";
 
 export default function FileCard({ fileData, isExplore }) {
   const type = fileData.mime_type;
-  console.log(fileData);
+
   return (
     <Card className="hover:bg-secondary hover:cursor-pointer">
       <CardContent className="p-4">
@@ -52,13 +52,24 @@ export default function FileCard({ fileData, isExplore }) {
             )}
           </div>
         </div>
-        <div className="flex flex-row justify-between items-center text-lg font-medium w-full">
-          <span className="w-full truncate">{fileData.metadata.name}</span>
-          <AssetActions
-            isExplore={isExplore}
-            cid={fileData.ipfs_pin_hash}
-            asset={fileData}
-          />
+        <div className="flex flex-col justify-between text-lg font-medium w-full">
+          <div className="flex flex-row justify-between items-center text-lg font-medium w-full">
+            <span className="w-full truncate">{fileData.metadata.name}</span>
+            <AssetActions
+              isExplore={isExplore}
+              cid={fileData.ipfs_pin_hash}
+              asset={fileData}
+            />
+          </div>
+          <span className="text-muted-foreground text-sm text-left">
+            {fileData.metadata.keyvalues &&
+            fileData.metadata.keyvalues.description
+              ? fileData.metadata.keyvalues.description
+              : "No description"}
+          </span>
+          <span className="text-muted-foreground text-sm text-left">
+            {fileData.mime_type}
+          </span>
         </div>
       </CardContent>
     </Card>

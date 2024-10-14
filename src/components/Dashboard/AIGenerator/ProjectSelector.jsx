@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { Check, ChevronsUpDown } from 'lucide-react';
+import * as React from "react";
+import { Check, ChevronsUpDown } from "lucide-react";
 
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -12,13 +12,13 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/components/ui/command';
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
-import { getAllProjects } from '@/server/get-all-projects';
+} from "@/components/ui/popover";
+import { getAllProjects } from "@/server/get-all-projects";
 
 export default function ProjectSelector({ onChange }) {
   const [open, setOpen] = React.useState(false);
@@ -33,7 +33,6 @@ export default function ProjectSelector({ onChange }) {
       setError(null);
       const result = await getAllProjects();
       if (result.success) {
-        console.log(result.projects);
         setProjects(result.projects);
       } else {
         setError(result.error);
@@ -53,22 +52,22 @@ export default function ProjectSelector({ onChange }) {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
-          variant='outline'
-          role='combobox'
+          variant="outline"
+          role="combobox"
           aria-expanded={open}
-          className='w-[200px] justify-between'
+          className="w-[200px] justify-between"
         >
-          {selectedProject ? selectedProject.name : 'Select project...'}
-          <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
+          {selectedProject ? selectedProject.name : "Select project..."}
+          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className='w-full p-0'>
+      <PopoverContent className="w-full p-0">
         <Command>
-          <CommandInput placeholder='Search project...' />
+          <CommandInput placeholder="Search project..." />
           {loading ? (
-            <div className='py-6 text-center text-sm'>Loading projects...</div>
+            <div className="py-6 text-center text-sm">Loading projects...</div>
           ) : error ? (
-            <div className='py-6 text-center text-sm text-red-500'>{error}</div>
+            <div className="py-6 text-center text-sm text-red-500">{error}</div>
           ) : (
             <CommandList>
               <CommandEmpty>No project found.</CommandEmpty>
@@ -85,10 +84,10 @@ export default function ProjectSelector({ onChange }) {
                     >
                       <Check
                         className={cn(
-                          'mr-2 h-4 w-4',
+                          "mr-2 h-4 w-4",
                           selectedProject?.id === project.id
-                            ? 'opacity-100'
-                            : 'opacity-0'
+                            ? "opacity-100"
+                            : "opacity-0"
                         )}
                       />
                       {project.name}
